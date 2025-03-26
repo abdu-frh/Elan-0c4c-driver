@@ -21,6 +21,7 @@ Options:
 """
 
 """
+old spec info:
 #define ELAN_MOC_DRIVER_FULLNAME "Elan MOC Sensors"
 #define ELAN_M0C_CMD_LEN 0x3
 #define ELAN_EP_CMD_OUT (0x1 | LIBUSB_ENDPOINT_OUT)
@@ -28,17 +29,38 @@ Options:
 #define ELAN_EP_MOC_CMD_IN (0x4 | LIBUSB_ENDPOINT_IN)
 #define ELAN_EP_IMG_IN (0x2 | LIBUSB_ENDPOINT_IN)
 
+new spec info:
+Device Info: {
+'endpoints': {'IN': [129, 130, 131, 132],
+'OUT': [1, 2, 3, 4]},
+'max_packet_size': {129: 64, 1: 64, 130: 64, 2: 64, 131: 64, 3: 64, 132: 64, 4: 64},
+'interfaces': [0],
+'configuration': <CONFIGURATION 1: 100 mA>}
+
 """
 
 VENDOR_ID = 0x04F3
 PRODUCT_ID = 0x0C4C
 SUPPORTED_VERSION = 3.05
 
+IO = {
+    'Unkown_IN': 0x81, #Unkown
+    'Unkown_OUT': 0x01, #Unkown
+    'IMG_IN': 0x82,
+    'IMG_OUT': 0x02, #Unkown
+    'CMD_IN': 0x83,
+    'CMD_OUT': 0x03, #Unkown
+    'MOC_CMD_IN': 0x84,
+    'MOC_CMD_OUT': 0x04 #Unkown
+}
+
 CONFIG = {
     5000 : "ELAN_CMD_TIMEOUT",
     92: "ELAN_MAX_USER_ID_LEN",
     9: "ELAN_MAX_ENROLL_NUM",
-    500: "ELAN_CAL_RETRY"
+    500: "ELAN_CAL_RETRY",
+    64: "ELAN_MAX_PACKET_SIZE",
+    3: "ELAN_MAX_HDR_LEN"
 }
 
 ERRORS = {
