@@ -63,6 +63,14 @@ CONFIG = {
     3: "ELAN_MAX_HDR_LEN"
 }
 
+ENROLLS = {
+    "ENROLL_RSP_RETRY":               0,
+    "ENROLL_RSP_ENROLL_REPORT":       1,
+    "ENROLL_RSP_ENROLL_OK":           2,
+    "ENROLL_RSP_ENROLL_CANCEL_REPORT":3,
+    "ENROLL_NUM_STATES":              4
+}
+
 ERRORS = {
     0xfd: "ELAN_MSG_VERIFY_ERR",
     0xfb: "ELAN_MSG_DIRTY",
@@ -75,7 +83,12 @@ ERRORS = {
 }
 
 def handle_info():
-    'Placeholder for info logic'
+    print("Simulated device info:")
+    print("  Vendor ID: 0x{:04X}".format(VENDOR_ID))
+    print("  Product ID: 0x{:04X}".format(PRODUCT_ID))
+    print("  Supported Protocol Version: {:.2f}".format(SUPPORTED_VERSION))
+    print("  Endpoints IN: {}".format(IO['CMD_IN']))
+    print("  Endpoints OUT: {}".format(IO['CMD_OUT']))
 
 def handle_reset():
     'Placeholder for reset logic'
@@ -86,14 +99,14 @@ def handle_enroll():
 def handle_verify():
     'Placeholder for verification logic'
 
-def main(args):
+command_router = {
+    'init': handle_info,
+    'scan': handle_reset,
+    'enroll': handle_enroll,
+    'verify': handle_verify
+}
 
-    command_router = {
-        'init': handle_info,
-        'scan': handle_reset,
-        'enroll': handle_enroll,
-        'verify': handle_verify
-    }
+def main(args):
 
     # Handle help first
     if args['--help'] or args['-h']:
