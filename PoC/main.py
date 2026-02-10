@@ -1,5 +1,3 @@
-import sys
-import docopt
 
 """
 ELAN 04F3:0C4C fingerprint reader driver PoC.
@@ -38,6 +36,9 @@ Device Info: {
 'configuration': <CONFIGURATION 1: 100 mA>}
 
 """
+
+import sys
+import docopt
 
 VENDOR_ID = 0x04F3
 PRODUCT_ID = 0x0C4C
