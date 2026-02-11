@@ -44,6 +44,19 @@
       "console": []
     },
     {
+      "id": "nzde",
+      "code_hash": "cd8581809393b26b4ee7ca389d8e528f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"commands-cause-windows-suck\">Commands cause windows suck\ud83d\ude44<br></h2>\n<span class=\"paragraph\">eval \"$(ssh-agent -s)\"<br>\nssh-add ~/.ssh/github</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
       "id": "bkHC",
       "code_hash": "b60fcd6f67508ed80d0d5eb1820b9bdb",
       "outputs": [
