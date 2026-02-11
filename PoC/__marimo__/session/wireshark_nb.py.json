@@ -71,39 +71,97 @@
     },
     {
       "id": "PKri",
-      "code_hash": "d6763e16edc136e14211c9a51bee68d2",
+      "code_hash": "7225bb95e102fec7131d8419fd521b0b",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Commands on USB Layer happens on USB Addr:<br>\nCMD_REQ: 0x01<br>\nCMD_RESP: 0x81</span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br>\nDATA_IMG_RESP: 0x82</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"commands-on-usb-layer-happens-on-usb-addr\">Commands on USB Layer happens on USB Addr:<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x01<br>\nCMD_RESP: 0x81</span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br>\nDATA_IMG_RESP: 0x82<br></span>\n<h3 id=\"commands-on-i2i-layer\">Commands on I2I Layer<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x40 + HEX_CMD</span>\n<ul>\n<li>Req_length</li>\n<li>Resp length<br></li>\n</ul>\n<h4 id=\"example-firmware-version-request\">Example firmware version request<br></h4>\n<span class=\"paragraph\">static const struct elanmoc_cmd fw_ver_cmd = {<br>\n  .cmd_header = {0x40, 0x19},<br>\n  .cmd_len = 2,<br>\n  .resp_len = 2,<br>\n}</span></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "Xref",
-      "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
+      "id": "daXX",
+      "code_hash": "cc2af55b0f7d696898b84344d1265132",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-and-processes-here-the-recorded-interaction-with-the-fingerprint\">Read and processes here the recorded interaction with the fingerprint\ud83c\udf86</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
       "outputs": [],
       "console": []
     },
     {
+      "id": "Xref",
+      "code_hash": "bb37ee2a87f248b443552b7d00c6287a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BfoG",
+      "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"try-to-emulate-cmds-only-works-on-linux-lol\">Try to emulate cmds only works on linux lol\ud83d\ude3a</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SCwh",
+      "code_hash": "a8f5f79787180210cc3dc3d76808e0bf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"needs-to-be-run-as-administrator-or-root-in-unix\">needs to be run as administrator or root in unix\u2b07\ufe0f</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
       "id": "SFPL",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
+      "code_hash": "a268b33781788c36873db949019a91cc",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "Cannot run the event loop while another loop is running",
+          "evalue": "[Errno 13] Access denied (insufficient permissions)",
           "traceback": []
         }
       ],
       "console": [
         {
           "type": "stream",
+          "name": "stdout",
+          "text": "Found device: 3148\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
           "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\marimo\\_runtime\\executor.py&quot;</span>, line <span class=\"m\">138</span>, in <span class=\"n\">execute_cell</span>\n<span class=\"w\">    </span><span class=\"n\">exec</span><span class=\"p\">(</span><span class=\"n\">cell</span><span class=\"o\">.</span><span class=\"n\">body</span><span class=\"p\">,</span> <span class=\"n\">glbls</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\AppData\\Local\\Temp\\marimo_21660\\__marimo__cell_SFPL_.py&quot;</span>, line <span class=\"m\">8</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">capture</span><span class=\"o\">.</span><span class=\"n\">load_packets</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\pyshark\\capture\\capture.py&quot;</span>, line <span class=\"m\">144</span>, in <span class=\"n\">load_packets</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">apply_on_packets</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^</span>\n<span class=\"w\">    </span>    <span class=\"n\">keep_packet</span><span class=\"p\">,</span> <span class=\"n\">timeout</span><span class=\"o\">=</span><span class=\"n\">timeout</span><span class=\"p\">,</span> <span class=\"n\">packet_count</span><span class=\"o\">=</span><span class=\"n\">packet_count</span><span class=\"p\">)</span>\n<span class=\"w\">        </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\pyshark\\capture\\capture.py&quot;</span>, line <span class=\"m\">256</span>, in <span class=\"n\">apply_on_packets</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">eventloop</span><span class=\"o\">.</span><span class=\"n\">run_until_complete</span><span class=\"p\">(</span><span class=\"n\">coro</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\asyncio\\base_events.py&quot;</span>, line <span class=\"m\">701</span>, in <span class=\"n\">run_until_complete</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_check_running</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\asyncio\\base_events.py&quot;</span>, line <span class=\"m\">639</span>, in <span class=\"n\">_check_running</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"ne\">RuntimeError</span><span class=\"p\">(</span>\n<span class=\"w\">    </span>    <span class=\"s1\">&#39;Cannot run the event loop while another loop is running&#39;</span><span class=\"p\">)</span>\n<span class=\"gr\">RuntimeError</span>: <span class=\"n\">Cannot run the event loop while another loop is running</span>\n</pre></div>\n</span>",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\marimo\\_runtime\\executor.py&quot;</span>, line <span class=\"m\">138</span>, in <span class=\"n\">execute_cell</span>\n<span class=\"w\">    </span><span class=\"n\">exec</span><span class=\"p\">(</span><span class=\"n\">cell</span><span class=\"o\">.</span><span class=\"n\">body</span><span class=\"p\">,</span> <span class=\"n\">glbls</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\AppData\\Local\\Temp\\marimo_17488\\__marimo__cell_SFPL_.py&quot;</span>, line <span class=\"m\">74</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">send_elan_cmd</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\AppData\\Local\\Temp\\marimo_17488\\__marimo__cell_SFPL_.py&quot;</span>, line <span class=\"m\">24</span>, in <span class=\"n\">send_elan_cmd</span>\n<span class=\"w\">    </span><span class=\"n\">cfg</span> <span class=\"o\">=</span> <span class=\"n\">dev</span><span class=\"o\">.</span><span class=\"n\">get_active_configuration</span><span class=\"p\">()</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">935</span>, in <span class=\"n\">get_active_configuration</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_ctx</span><span class=\"o\">.</span><span class=\"n\">get_active_configuration</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">113</span>, in <span class=\"n\">wrapper</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">,</span> <span class=\"o\">*</span><span class=\"n\">args</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwargs</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">256</span>, in <span class=\"n\">get_active_configuration</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">managed_open</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">113</span>, in <span class=\"n\">wrapper</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">,</span> <span class=\"o\">*</span><span class=\"n\">args</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwargs</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">132</span>, in <span class=\"n\">managed_open</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">handle</span> <span class=\"o\">=</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">backend</span><span class=\"o\">.</span><span class=\"n\">open_device</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">dev</span><span class=\"p\">)</span>\n<span class=\"w\">                  </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">808</span>, in <span class=\"n\">open_device</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">_DeviceHandle</span><span class=\"p\">(</span><span class=\"n\">dev</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">656</span>, in <span class=\"n\">__init__</span>\n<span class=\"w\">    </span><span class=\"n\">_check</span><span class=\"p\">(</span><span class=\"n\">_lib</span><span class=\"o\">.</span><span class=\"n\">libusb_open</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">devid</span><span class=\"p\">,</span> <span class=\"n\">byref</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">handle</span><span class=\"p\">)))</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">604</span>, in <span class=\"n\">_check</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">USBError</span><span class=\"p\">(</span><span class=\"n\">_strerror</span><span class=\"p\">(</span><span class=\"n\">ret</span><span class=\"p\">),</span> <span class=\"n\">ret</span><span class=\"p\">,</span> <span class=\"n\">_libusb_errno</span><span class=\"p\">[</span><span class=\"n\">ret</span><span class=\"p\">])</span>\n<span class=\"gr\">usb.core.USBError</span>: <span class=\"n\">[Errno 13] Access denied (insufficient permissions)</span>\n</pre></div>\n</span>",
           "mimetype": "application/vnd.marimo+traceback"
         }
       ]
