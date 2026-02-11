@@ -1,0 +1,86 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.19.9"
+  },
+  "cells": [
+    {
+      "id": "mrJh",
+      "code_hash": "871204b8b4100e6d358c34c9b9bb6716",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"reverse-engineering-elan-wbf-fingerprint-sensor\">Reverse Engineering ELAN WBF Fingerprint Sensor</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nEjb",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "unuL",
+      "code_hash": "80e3aee65f03fbb3ff9c0515992da55b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"using-wireshark-and-drivers-from-older-elan-fingerprint-version-from-libusb-libary\">Using Wireshark and drivers from older Elan fingerprint version from Libusb libary</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ULue",
+      "code_hash": "52a79ca3318ba90ffb3436c439183567",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"current-knowledge\">Current Knowledge</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "gXji",
+      "code_hash": "62225cfe279196036e969bbdf75dfb37",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The devices is a complete arm mini computer with cpu and storage.<br />\nIt manages the enroll,verfication,storage and deletion of the fingerprint.</span>\n<span class=\"paragraph\">To communication with it, happens on the USB Protocol,from Computer to the Elan ARM M4.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "jemW",
+      "code_hash": "34ecf6074d1d2ab1198a1a8a1a46564f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Commands on USB Layer happens on USB Addr:<br />\nCMD_REQ: 0x01<br />\nCMD_RESP: 0x81 </span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br />\nDATA_IMG_RESP: 0x82</span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
