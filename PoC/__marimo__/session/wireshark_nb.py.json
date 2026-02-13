@@ -18,19 +18,6 @@
       "console": []
     },
     {
-      "id": "MJUe",
-      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "vblA",
       "code_hash": "80e3aee65f03fbb3ff9c0515992da55b",
       "outputs": [
@@ -109,25 +96,6 @@
       "console": []
     },
     {
-      "id": "BYtC",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "RGSE",
-      "code_hash": "bb37ee2a87f248b443552b7d00c6287a",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "Kclp",
       "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
       "outputs": [
@@ -154,13 +122,7 @@
       "console": []
     },
     {
-      "id": "NvCT",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "yiXf",
+      "id": "iLit",
       "code_hash": "758b1b96d110fe7cd2dd65018a4b3f78",
       "outputs": [
         {
@@ -173,14 +135,8 @@
       "console": []
     },
     {
-      "id": "vzfo",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "nOkB",
-      "code_hash": "c1db44dd4d2893d36f706ca9c77fe753",
+      "id": "ROlb",
+      "code_hash": "348e819da80c1cf0001fed7af1e9219c",
       "outputs": [
         {
           "type": "data",
@@ -192,19 +148,7 @@
       "console": []
     },
     {
-      "id": "sVFD",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "aIaF",
-      "code_hash": null,
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "FTkC",
+      "id": "Vxnm",
       "code_hash": "568bdb98f0d6e4ef59b6087759aba4d2",
       "outputs": [
         {
@@ -217,30 +161,92 @@
       "console": []
     },
     {
-      "id": "Hstk",
-      "code_hash": "21777ad857d1a86a95340cefb15e9589",
+      "id": "MJUe",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "[Errno 110] Operation timed out",
+          "evalue": "TShark not found. Try adding its location to the configuration file. Searched these paths: ['C:\\\\Program Files\\\\Wireshark\\\\tshark.exe', '/var/home/abdullahi/.bun/bin/tshark', '/var/home/abdullahi/.deno/bin/tshark', '/var/home/abdullahi/.cargo/bin/tshark', '/var/home/abdullahi/anaconda3/envs/fingerprint/bin/tshark', '/var/home/abdullahi/anaconda3/condabin/tshark', '/var/home/abdullahi/.bun/bin/tshark', '/var/home/abdullahi/.local/bin/tshark', '/var/home/abdullahi/bin/tshark', '/usr/local/sbin/tshark', '/usr/local/bin/tshark', '/usr/bin/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark', '/var/home/abdullahi/.local/share/JetBrains/Toolbox/scripts/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark']",
           "traceback": []
         }
       ],
       "console": [
         {
           "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_104394/__marimo__cell_BYtC_.py&quot;</span>, line <span class=\"m\">8</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">capture</span><span class=\"o\">.</span><span class=\"n\">load_packets</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">144</span>, in <span class=\"n\">load_packets</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">apply_on_packets</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^</span>\n<span class=\"w\">    </span>    <span class=\"n\">keep_packet</span><span class=\"p\">,</span> <span class=\"n\">timeout</span><span class=\"o\">=</span><span class=\"n\">timeout</span><span class=\"p\">,</span> <span class=\"n\">packet_count</span><span class=\"o\">=</span><span class=\"n\">packet_count</span><span class=\"p\">)</span>\n<span class=\"w\">        </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">256</span>, in <span class=\"n\">apply_on_packets</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">eventloop</span><span class=\"o\">.</span><span class=\"n\">run_until_complete</span><span class=\"p\">(</span><span class=\"n\">coro</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/nest_asyncio.py&quot;</span>, line <span class=\"m\">98</span>, in <span class=\"n\">run_until_complete</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"o\">.</span><span class=\"n\">result</span><span class=\"p\">()</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/asyncio/futures.py&quot;</span>, line <span class=\"m\">199</span>, in <span class=\"n\">result</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_exception</span><span class=\"o\">.</span><span class=\"n\">with_traceback</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_exception_tb</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/asyncio/tasks.py&quot;</span>, line <span class=\"m\">304</span>, in <span class=\"n\">__step_run_and_handle_result</span>\n<span class=\"w\">    </span><span class=\"n\">result</span> <span class=\"o\">=</span> <span class=\"n\">coro</span><span class=\"o\">.</span><span class=\"n\">send</span><span class=\"p\">(</span><span class=\"kc\">None</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">265</span>, in <span class=\"n\">packets_from_tshark</span>\n<span class=\"w\">    </span><span class=\"n\">tshark_process</span> <span class=\"o\">=</span> <span class=\"k\">await</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_get_tshark_process</span><span class=\"p\">(</span><span class=\"n\">packet_count</span><span class=\"o\">=</span><span class=\"n\">packet_count</span><span class=\"p\">)</span>\n<span class=\"w\">                     </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">340</span>, in <span class=\"n\">_get_tshark_process</span>\n<span class=\"w\">    </span><span class=\"n\">parameters</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_get_tshark_path</span><span class=\"p\">(),</span> <span class=\"s2\">&quot;-l&quot;</span><span class=\"p\">,</span> <span class=\"s2\">&quot;-n&quot;</span><span class=\"p\">,</span> <span class=\"s2\">&quot;-T&quot;</span><span class=\"p\">,</span> <span class=\"n\">output_type</span><span class=\"p\">]</span> <span class=\"o\">+</span> \\\n<span class=\"w\">                  </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">315</span>, in <span class=\"n\">_get_tshark_path</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">get_process_path</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">tshark_path</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/tshark/tshark.py&quot;</span>, line <span class=\"m\">70</span>, in <span class=\"n\">get_process_path</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">TSharkNotFoundException</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"o\">...&lt;</span><span class=\"mi\">2</span> <span class=\"n\">lines</span><span class=\"o\">&gt;...</span>\n<span class=\"w\">    </span><span class=\"p\">)</span>\n<span class=\"gr\">pyshark.tshark.tshark.TSharkNotFoundException</span>: <span class=\"n\">TShark not found. Try adding its location to the configuration file. Searched these paths: [&#39;C:\\\\Program Files\\\\Wireshark\\\\tshark.exe&#39;, &#39;/var/home/abdullahi/.bun/bin/tshark&#39;, &#39;/var/home/abdullahi/.deno/bin/tshark&#39;, &#39;/var/home/abdullahi/.cargo/bin/tshark&#39;, &#39;/var/home/abdullahi/anaconda3/envs/fingerprint/bin/tshark&#39;, &#39;/var/home/abdullahi/anaconda3/condabin/tshark&#39;, &#39;/var/home/abdullahi/.bun/bin/tshark&#39;, &#39;/var/home/abdullahi/.local/bin/tshark&#39;, &#39;/var/home/abdullahi/bin/tshark&#39;, &#39;/usr/local/sbin/tshark&#39;, &#39;/usr/local/bin/tshark&#39;, &#39;/usr/bin/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;, &#39;/var/home/abdullahi/.local/share/JetBrains/Toolbox/scripts/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;]</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        },
+        {
+          "type": "stream",
           "name": "stdout",
-          "text": "Found device: 3148\nSending command: 4019 (Register 0x40, Opcode 0x19)\nSent 2 bytes\nWaiting for device processing (50ms)...\nERROR: Timeout waiting for response. Is the device ready?\nInterface released\n",
+          "text": "> /var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/tshark/tshark.py(70)get_process_path()\n-> raise TSharkNotFoundException(\n(Pdb) ",
           "mimetype": "text/plain"
         },
         {
           "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_20365/__marimo__cell_Hstk_.py&quot;</span>, line <span class=\"m\">74</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">send_elan_cmd</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_20365/__marimo__cell_Hstk_.py&quot;</span>, line <span class=\"m\">47</span>, in <span class=\"n\">send_elan_cmd</span>\n<span class=\"w\">    </span><span class=\"n\">resp</span> <span class=\"o\">=</span> <span class=\"n\">dev</span><span class=\"o\">.</span><span class=\"n\">read</span><span class=\"p\">(</span><span class=\"n\">EP_IN</span><span class=\"p\">,</span> <span class=\"mi\">64</span><span class=\"p\">,</span> <span class=\"n\">timeout</span><span class=\"o\">=</span><span class=\"n\">TIMEOUT_MS</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/usb/core.py&quot;</span>, line <span class=\"m\">1043</span>, in <span class=\"n\">read</span>\n<span class=\"w\">    </span><span class=\"n\">ret</span> <span class=\"o\">=</span> <span class=\"n\">fn</span><span class=\"p\">(</span>\n<span class=\"w\">    </span>        <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_ctx</span><span class=\"o\">.</span><span class=\"n\">handle</span><span class=\"p\">,</span>\n<span class=\"w\">    </span><span class=\"o\">...&lt;</span><span class=\"mi\">2</span> <span class=\"n\">lines</span><span class=\"o\">&gt;...</span>\n<span class=\"w\">    </span>        <span class=\"n\">buff</span><span class=\"p\">,</span>\n<span class=\"w\">    </span>        <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">__get_timeout</span><span class=\"p\">(</span><span class=\"n\">timeout</span><span class=\"p\">))</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/usb/backend/libusb1.py&quot;</span>, line <span class=\"m\">850</span>, in <span class=\"n\">bulk_read</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">__read</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">lib</span><span class=\"o\">.</span><span class=\"n\">libusb_bulk_transfer</span><span class=\"p\">,</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n<span class=\"w\">    </span>                   <span class=\"n\">dev_handle</span><span class=\"p\">,</span>\n<span class=\"w\">                       </span><span class=\"pm\">^^^^^^^^^^^</span>\n<span class=\"w\">    </span><span class=\"o\">...&lt;</span><span class=\"mi\">2</span> <span class=\"n\">lines</span><span class=\"o\">&gt;...</span>\n<span class=\"w\">    </span>                   <span class=\"n\">buff</span><span class=\"p\">,</span>\n<span class=\"w\">                       </span><span class=\"pm\">^^^^^</span>\n<span class=\"w\">    </span>                   <span class=\"n\">timeout</span><span class=\"p\">)</span>\n<span class=\"w\">                       </span><span class=\"pm\">^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/usb/backend/libusb1.py&quot;</span>, line <span class=\"m\">958</span>, in <span class=\"n\">__read</span>\n<span class=\"w\">    </span><span class=\"n\">_check</span><span class=\"p\">(</span><span class=\"n\">retval</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/usb/backend/libusb1.py&quot;</span>, line <span class=\"m\">602</span>, in <span class=\"n\">_check</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">USBTimeoutError</span><span class=\"p\">(</span><span class=\"n\">_strerror</span><span class=\"p\">(</span><span class=\"n\">ret</span><span class=\"p\">),</span> <span class=\"n\">ret</span><span class=\"p\">,</span> <span class=\"n\">_libusb_errno</span><span class=\"p\">[</span><span class=\"n\">ret</span><span class=\"p\">])</span>\n<span class=\"gr\">usb.core.USBTimeoutError</span>: <span class=\"n\">[Errno 110] Operation timed out</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
+          "name": "stdout",
+          "text": " c\n",
+          "mimetype": "text/plain"
         }
       ]
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "7abf6456a793c5718303213dd8dfaf2b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "de6ee9db03331a0dc11e765f0859bfd9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "2bfe8771278d7263f870f5b05589b51d",
+      "outputs": [],
+      "console": []
     }
   ]
 }

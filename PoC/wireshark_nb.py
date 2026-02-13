@@ -129,43 +129,54 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
-    import usb.core
+@app.cell
+def _(PRODUCT_ID, VENDOR_ID):
     import usb.util
+    import usb.core
     import libusb_package
 
     # Get the bundled backend
     backend = libusb_package.get_libusb1_backend()
 
-    def find_device(backend=libusb_package, vendor_id, product_id):
+    def find_device(vendor_id, product_id):
         dev = usb.core.find(backend=backend, idVendor=vendor_id, idProduct=product_id)
         if dev is None:
             raise ValueError("Device not found")
-    
+
         return dev 
+
+    if __name__ == "__find_device__":
+        tmp = find_device(VENDOR_ID,PRODUCT_ID)
+        print(tmp)
+    return
+
+
+app._unparsable_cell(
+    r"""
+    import usb.core
+    import usb.util
+
 
     def config_device(dev):
         dev.set_configuration()
-    
+
         cfg = dev.get_active_configuration()
         intf = cfg[(0, 0)]  # Interface 0, Alternate setting 0
-    
+
         # Detach kernel driver if attached (Linux/macOS)
         if dev.is_kernel_driver_active(0):
             print("Detaching kernel driver...")
             dev.detach_kernel_driver(0)
-    
+
         # Claim interface
         usb.util.claim_interface(dev, 0)
 
         return intf
-    
+
     def find_and_config_device():
         dev = find_device()
         intf = config_device(dev)
         return dev intf
-
     """,
     name="_"
 )
@@ -212,7 +223,7 @@ def _(mo):
 def _():
     EP_OUT = 0x01  
     EP_IN  = 0x81  
-    return EP_IN, EP_OUT
+    return
 
 
 app._unparsable_cell(
@@ -229,8 +240,11 @@ app._unparsable_cell(
         cmd: hex
         payload: hex
         resp_len: bytes
-    
+
     send_cmd(dev,cmd:elan_cmd):
+        # Claim interface
+        usb.util.claim_interface(dev, 0)
+
         try:
             print(f"Sending {cmd.name} command...")
 
@@ -247,20 +261,20 @@ app._unparsable_cell(
             resp = dev.read(EP_IN, 64, timeout=TIMEOUT_MS)
 
             # Parse response (first resp_len bytes are valid)
-            if len(resp) >= EXPECTED_RESP_LEN:
+            if len(resp) >= cmd.resp_len:
                 version_major = resp[0]
                 version_minor = resp[1]
                 version_combined = (resp[0] << 8) | resp[1]
 
-                print(f"Response raw: {resp[:EXPECTED_RESP_LEN].hex()}")
+                print(f"Response raw: {resp[:cmd.resp_len].hex()}")
                 print(f"Firmware Version: {version_major}.{version_minor} (0x{version_combined:04X})")
-                return resp[:EXPECTED_RESP_LEN]
+                return resp[:cmd.resp_len]
             else:
                 print(f"Short response: {resp.hex()}")
                 return resp
 
         except usb.core.USBTimeoutError:
-            print("ERROR: Timeout waiting for response. Is the device ready?")
+            print("ERROR: Timeout. Is the device ready?")
             raise
         except Exception as e:
             print(f"ERROR: {e}")
@@ -269,7 +283,6 @@ app._unparsable_cell(
             # Cleanup
             usb.util.release_interface(dev, 0)
             print("Interface released")
-    
     """,
     name="_"
 )
@@ -280,84 +293,6 @@ def _(mo):
     mo.md(r"""
     ### Get Firmware Version
     """)
-    return
-
-
-@app.cell
-def _(EP_IN, EP_OUT, PRODUCT_ID, TIMEOUT_MS, VENDOR_ID):
-    import usb.core
-    import usb.util
-    import time
-    import libusb_package
-
-    # Get the bundled backend
-    backend = libusb_package.get_libusb1_backend()
-
-    FW_VER_CMD = bytes([0x40, 0x19])  
-    EXPECTED_RESP_LEN = 2             
-
-    def send_elan_cmd():
-        # Find device
-        dev = usb.core.find(backend=backend,idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
-        if dev is None:
-            raise ValueError(f"Device not found")
-
-        print(f"Found device: {PRODUCT_ID}")
-
-       # Unmark if device driver is not configured by os
-        dev.set_configuration()
-
-        cfg = dev.get_active_configuration()
-        intf = cfg[(0, 0)]  # Interface 0, Alternate setting 0
-
-        # Detach kernel driver if attached (Linux/macOS)
-        if dev.is_kernel_driver_active(0):
-            print("Detaching kernel driver...")
-            dev.detach_kernel_driver(0)
-
-        # Claim interface
-        usb.util.claim_interface(dev, 0)
-
-        try:
-            print(f"Sending command: {FW_VER_CMD.hex()} (Register 0x{FW_VER_CMD[0]:02X}, Opcode 0x{FW_VER_CMD[1]:02X})")
-
-            # WRITE PHASE: Send to EP1 OUT (0x01)
-            bytes_written = dev.write(EP_OUT, FW_VER_CMD, timeout=TIMEOUT_MS)
-            print(f"Sent {bytes_written} bytes")
-
-            # CRITICAL DELAY: ARM-M4 needs time to process I2C command
-            print("Waiting for device processing (50ms)...")
-            time.sleep(0.05)
-
-            # READ PHASE: Read from EP1 IN (0x81)
-            resp = dev.read(EP_IN, 64, timeout=TIMEOUT_MS)
-
-            # Parse response (first resp_len bytes are valid)
-            if len(resp) >= EXPECTED_RESP_LEN:
-                version_major = resp[0]
-                version_minor = resp[1]
-                version_combined = (resp[0] << 8) | resp[1]
-
-                print(f"Response raw: {resp[:EXPECTED_RESP_LEN].hex()}")
-                print(f"Firmware Version: {version_major}.{version_minor} (0x{version_combined:04X})")
-                return resp[:EXPECTED_RESP_LEN]
-            else:
-                print(f"Short response: {resp.hex()}")
-                return resp
-
-        except usb.core.USBTimeoutError:
-            print("ERROR: Timeout waiting for response. Is the device ready?")
-            raise
-        except Exception as e:
-            print(f"ERROR: {e}")
-            raise
-        finally:
-            # Cleanup
-            usb.util.release_interface(dev, 0)
-            print("Interface released")
-
-    if __name__ == "__main__":
-        send_elan_cmd()
     return
 
 
