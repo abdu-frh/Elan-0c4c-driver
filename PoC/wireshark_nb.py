@@ -41,7 +41,12 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Current Knowledge
+    ## Current Knowledge
+
+    The devices is a complete arm mini computer with cpu and storage.<br>
+    It manages the enroll, verfication, storage and deletion of the fingerprint.
+
+    To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.
     """)
     return
 
@@ -49,12 +54,45 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    The devices is a complete arm mini computer with cpu and storage.
-    It manages the enroll, verfication, storage and deletion of the fingerprint.
+    ##USB Descriptor Hierarchy
 
-    To communication with it, happens on the USB Protocol, from Computer to the Elan ARM M4.
+    USB devices are organized in a tree structure: Device → Configuration → Interface → Endpoint.
+
+    Device contains: Vendor ID, Product ID and List of Configuration.<br>
+    Configuration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>
+    Example: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>
+    Endpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)
     """)
     return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ##How to figure out DeviceID and VendorID
+
+    command on linux: lsusb
+
+    ###Output:
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>
+    Bus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4<br>
+    Bus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line<br>
+    Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>
+    Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>
+    Bus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio<br>
+    Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>
+
+    its always after the ID < VendorID : DeviceID > <br>
+    our Fingerprint device here is, the ELAN:ARM-M4, VendorID:04f3 DeviceID:0c4c
+    """)
+    return
+
+
+@app.cell
+def _():
+    VENDOR_ID = 0x04F3
+    PRODUCT_ID = 0x0C4C
+    return PRODUCT_ID, VENDOR_ID
 
 
 @app.cell(hide_code=True)
@@ -104,13 +142,6 @@ def _():
 
     print(capture)
     return
-
-
-@app.cell
-def _():
-    VENDOR_ID = 0x04F3
-    PRODUCT_ID = 0x0C4C
-    return PRODUCT_ID, VENDOR_ID
 
 
 @app.cell(hide_code=True)

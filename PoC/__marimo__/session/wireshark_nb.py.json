@@ -18,6 +18,19 @@
       "console": []
     },
     {
+      "id": "MJUe",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
       "id": "vblA",
       "code_hash": "80e3aee65f03fbb3ff9c0515992da55b",
       "outputs": [
@@ -44,29 +57,48 @@
       "console": []
     },
     {
-      "id": "lEQa",
-      "code_hash": "b60fcd6f67508ed80d0d5eb1820b9bdb",
+      "id": "PKri",
+      "code_hash": "e206453d2f7e917a8935ca7b7817858f",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"current-knowledge\">Current Knowledge</h3></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"current-knowledge\">Current Knowledge</h2>\n<span class=\"paragraph\">The devices is a complete arm mini computer with cpu and storage.<br>\nIt manages the enroll, verfication, storage and deletion of the fingerprint.</span>\n<span class=\"paragraph\">To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.</span></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "PKri",
-      "code_hash": "467c869a5b8c09d03b248ac49110c6fb",
+      "id": "TVcH",
+      "code_hash": "98e54b9026eccfa7484299f091da6ecf",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The devices is a complete arm mini computer with cpu and storage.\nIt manages the enroll, verfication, storage and deletion of the fingerprint.</span>\n<span class=\"paragraph\">To communication with it, happens on the USB Protocol, from Computer to the Elan ARM M4.</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<span class=\"paragraph\">Device contains: Vendor ID, Product ID and List of Configuration.<br> \nConfiguration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>\nExample: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>\nEndpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)</span></span>"
           }
         }
       ],
+      "console": []
+    },
+    {
+      "id": "GhHg",
+      "code_hash": "1f2c420e628c7328089a6bfa3f6e908d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"how-to-figure-out-deviceid-and-vendorid\">How to figure out DeviceID and VendorID</h2>\n<span class=\"paragraph\">command on linux: lsusb</span>\n<h3 id=\"output\">Output:</h3>\n<span class=\"paragraph\">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>\nBus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4<br>\nBus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line<br>\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>\nBus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio<br>\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br></span>\n<span class=\"paragraph\">its always after the ID &lt; VendorID : DeviceID &gt; <br>\nour Fingerprint device here is, the ELAN:ARM-M4, VendorID:04f3 DeviceID:0c4c</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
+      "outputs": [],
       "console": []
     },
     {
@@ -96,6 +128,12 @@
       "console": []
     },
     {
+      "id": "BYtC",
+      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
+      "outputs": [],
+      "console": []
+    },
+    {
       "id": "Kclp",
       "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
       "outputs": [
@@ -122,6 +160,18 @@
       "console": []
     },
     {
+      "id": "Hstk",
+      "code_hash": "7abf6456a793c5718303213dd8dfaf2b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
+      "outputs": [],
+      "console": []
+    },
+    {
       "id": "iLit",
       "code_hash": "758b1b96d110fe7cd2dd65018a4b3f78",
       "outputs": [
@@ -132,6 +182,12 @@
           }
         }
       ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
+      "outputs": [],
       "console": []
     },
     {
@@ -148,6 +204,18 @@
       "console": []
     },
     {
+      "id": "qnkX",
+      "code_hash": "de6ee9db03331a0dc11e765f0859bfd9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "2bfe8771278d7263f870f5b05589b51d",
+      "outputs": [],
+      "console": []
+    },
+    {
       "id": "Vxnm",
       "code_hash": "568bdb98f0d6e4ef59b6087759aba4d2",
       "outputs": [
@@ -158,94 +226,6 @@
           }
         }
       ],
-      "console": []
-    },
-    {
-      "id": "MJUe",
-      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "BYtC",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "TShark not found. Try adding its location to the configuration file. Searched these paths: ['C:\\\\Program Files\\\\Wireshark\\\\tshark.exe', '/var/home/abdullahi/.bun/bin/tshark', '/var/home/abdullahi/.deno/bin/tshark', '/var/home/abdullahi/.cargo/bin/tshark', '/var/home/abdullahi/anaconda3/envs/fingerprint/bin/tshark', '/var/home/abdullahi/anaconda3/condabin/tshark', '/var/home/abdullahi/.bun/bin/tshark', '/var/home/abdullahi/.local/bin/tshark', '/var/home/abdullahi/bin/tshark', '/usr/local/sbin/tshark', '/usr/local/bin/tshark', '/usr/bin/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark', '/var/home/abdullahi/.local/share/JetBrains/Toolbox/scripts/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark', '/var/home/abdullahi/.lmstudio/bin/tshark']",
-          "traceback": []
-        }
-      ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_104394/__marimo__cell_BYtC_.py&quot;</span>, line <span class=\"m\">8</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">capture</span><span class=\"o\">.</span><span class=\"n\">load_packets</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">144</span>, in <span class=\"n\">load_packets</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">apply_on_packets</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^</span>\n<span class=\"w\">    </span>    <span class=\"n\">keep_packet</span><span class=\"p\">,</span> <span class=\"n\">timeout</span><span class=\"o\">=</span><span class=\"n\">timeout</span><span class=\"p\">,</span> <span class=\"n\">packet_count</span><span class=\"o\">=</span><span class=\"n\">packet_count</span><span class=\"p\">)</span>\n<span class=\"w\">        </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">256</span>, in <span class=\"n\">apply_on_packets</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">eventloop</span><span class=\"o\">.</span><span class=\"n\">run_until_complete</span><span class=\"p\">(</span><span class=\"n\">coro</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/nest_asyncio.py&quot;</span>, line <span class=\"m\">98</span>, in <span class=\"n\">run_until_complete</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"o\">.</span><span class=\"n\">result</span><span class=\"p\">()</span>\n<span class=\"w\">           </span><span class=\"pm\">~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/asyncio/futures.py&quot;</span>, line <span class=\"m\">199</span>, in <span class=\"n\">result</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_exception</span><span class=\"o\">.</span><span class=\"n\">with_traceback</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_exception_tb</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/asyncio/tasks.py&quot;</span>, line <span class=\"m\">304</span>, in <span class=\"n\">__step_run_and_handle_result</span>\n<span class=\"w\">    </span><span class=\"n\">result</span> <span class=\"o\">=</span> <span class=\"n\">coro</span><span class=\"o\">.</span><span class=\"n\">send</span><span class=\"p\">(</span><span class=\"kc\">None</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">265</span>, in <span class=\"n\">packets_from_tshark</span>\n<span class=\"w\">    </span><span class=\"n\">tshark_process</span> <span class=\"o\">=</span> <span class=\"k\">await</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_get_tshark_process</span><span class=\"p\">(</span><span class=\"n\">packet_count</span><span class=\"o\">=</span><span class=\"n\">packet_count</span><span class=\"p\">)</span>\n<span class=\"w\">                     </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">340</span>, in <span class=\"n\">_get_tshark_process</span>\n<span class=\"w\">    </span><span class=\"n\">parameters</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_get_tshark_path</span><span class=\"p\">(),</span> <span class=\"s2\">&quot;-l&quot;</span><span class=\"p\">,</span> <span class=\"s2\">&quot;-n&quot;</span><span class=\"p\">,</span> <span class=\"s2\">&quot;-T&quot;</span><span class=\"p\">,</span> <span class=\"n\">output_type</span><span class=\"p\">]</span> <span class=\"o\">+</span> \\\n<span class=\"w\">                  </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/capture/capture.py&quot;</span>, line <span class=\"m\">315</span>, in <span class=\"n\">_get_tshark_path</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">get_process_path</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">tshark_path</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/tshark/tshark.py&quot;</span>, line <span class=\"m\">70</span>, in <span class=\"n\">get_process_path</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">TSharkNotFoundException</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"o\">...&lt;</span><span class=\"mi\">2</span> <span class=\"n\">lines</span><span class=\"o\">&gt;...</span>\n<span class=\"w\">    </span><span class=\"p\">)</span>\n<span class=\"gr\">pyshark.tshark.tshark.TSharkNotFoundException</span>: <span class=\"n\">TShark not found. Try adding its location to the configuration file. Searched these paths: [&#39;C:\\\\Program Files\\\\Wireshark\\\\tshark.exe&#39;, &#39;/var/home/abdullahi/.bun/bin/tshark&#39;, &#39;/var/home/abdullahi/.deno/bin/tshark&#39;, &#39;/var/home/abdullahi/.cargo/bin/tshark&#39;, &#39;/var/home/abdullahi/anaconda3/envs/fingerprint/bin/tshark&#39;, &#39;/var/home/abdullahi/anaconda3/condabin/tshark&#39;, &#39;/var/home/abdullahi/.bun/bin/tshark&#39;, &#39;/var/home/abdullahi/.local/bin/tshark&#39;, &#39;/var/home/abdullahi/bin/tshark&#39;, &#39;/usr/local/sbin/tshark&#39;, &#39;/usr/local/bin/tshark&#39;, &#39;/usr/bin/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;, &#39;/var/home/abdullahi/.local/share/JetBrains/Toolbox/scripts/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;, &#39;/var/home/abdullahi/.lmstudio/bin/tshark&#39;]</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        },
-        {
-          "type": "stream",
-          "name": "stdout",
-          "text": "> /var/home/abdullahi/anaconda3/envs/fingerprint/lib/python3.13/site-packages/pyshark/tshark/tshark.py(70)get_process_path()\n-> raise TSharkNotFoundException(\n(Pdb) ",
-          "mimetype": "text/plain"
-        },
-        {
-          "type": "stream",
-          "name": "stdout",
-          "text": " c\n",
-          "mimetype": "text/plain"
-        }
-      ]
-    },
-    {
-      "id": "RGSE",
-      "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "Hstk",
-      "code_hash": "7abf6456a793c5718303213dd8dfaf2b",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "nWHF",
-      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "ZHCJ",
-      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "qnkX",
-      "code_hash": "de6ee9db03331a0dc11e765f0859bfd9",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "TqIu",
-      "code_hash": "2bfe8771278d7263f870f5b05589b51d",
-      "outputs": [],
       "console": []
     }
   ]
