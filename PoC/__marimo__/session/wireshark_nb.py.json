@@ -44,7 +44,7 @@
       "console": []
     },
     {
-      "id": "bkHC",
+      "id": "lEQa",
       "code_hash": "cd8581809393b26b4ee7ca389d8e528f",
       "outputs": [
         {
@@ -70,21 +70,21 @@
       "console": []
     },
     {
-      "id": "TVcH",
-      "code_hash": "98e54b9026eccfa7484299f091da6ecf",
+      "id": "Xref",
+      "code_hash": "0b4bdda5ced0cbc450f5791c17876e8b",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<span class=\"paragraph\">Device contains: Vendor ID, Product ID and List of Configuration.<br> \nConfiguration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>\nExample: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>\nEndpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<span class=\"paragraph\">Device contains: Vendor ID, Product ID and List of Configuration.<br>\nConfiguration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>\nExample: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>\nEndpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)</span></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "GhHg",
-      "code_hash": "1f2c420e628c7328089a6bfa3f6e908d",
+      "id": "SFPL",
+      "code_hash": "cd75561ba78dee69ea3e0e0a47b1015f",
       "outputs": [
         {
           "type": "data",
@@ -96,58 +96,26 @@
       "console": []
     },
     {
-      "id": "RGSE",
+      "id": "BYtC",
       "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
       "outputs": [],
       "console": []
     },
     {
-      "id": "Xref",
-      "code_hash": "7225bb95e102fec7131d8419fd521b0b",
+      "id": "grQC",
+      "code_hash": "6ad69c62aa62d7423f582ee43330f172",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"commands-on-usb-layer-happens-on-usb-addr\">Commands on USB Layer happens on USB Addr:<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x01<br>\nCMD_RESP: 0x81</span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br>\nDATA_IMG_RESP: 0x82<br></span>\n<h3 id=\"commands-on-i2i-layer\">Commands on I2I Layer<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x40 + HEX_CMD</span>\n<ul>\n<li>Req_length</li>\n<li>Resp length<br></li>\n</ul>\n<h4 id=\"example-firmware-version-request\">Example firmware version request<br></h4>\n<span class=\"paragraph\">static const struct elanmoc_cmd fw_ver_cmd = {<br>\n  .cmd_header = {0x40, 0x19},<br>\n  .cmd_len = 2,<br>\n  .resp_len = 2,<br>\n}</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"finding-more-infomation-about-the-fingerprint-as-a-usb-device\">Finding more infomation about the Fingerprint, as a USB Device</h2></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "SFPL",
-      "code_hash": "cc2af55b0f7d696898b84344d1265132",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-and-processes-here-the-recorded-interaction-with-the-fingerprint\">Read and processes here the recorded interaction with the fingerprint\ud83c\udf86</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "BYtC",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "Kclp",
-      "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"try-to-emulate-cmds-only-works-on-linux-lol\">Try to emulate cmds only works on linux lol\ud83d\ude3a</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "emfo",
+      "id": "nWHF",
       "code_hash": "a8f5f79787180210cc3dc3d76808e0bf",
       "outputs": [
         {
@@ -160,25 +128,70 @@
       "console": []
     },
     {
-      "id": "Hstk",
+      "id": "iLit",
       "code_hash": "7abf6456a793c5718303213dd8dfaf2b",
       "outputs": [],
       "console": []
     },
     {
-      "id": "nWHF",
-      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "iLit",
-      "code_hash": "758b1b96d110fe7cd2dd65018a4b3f78",
+      "id": "ROlb",
+      "code_hash": "197ac107abdd7286c31ba169f38b78ba",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"searching-for-usb-endpoints\">Searching for USB Endpoints</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"lists-configurations-interface-endpoints\">Lists Configurations, Interface, Endpoints</h2>\n<span class=\"paragraph\">Lol straight up stole from libusb docs</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "7225bb95e102fec7131d8419fd521b0b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"commands-on-usb-layer-happens-on-usb-addr\">Commands on USB Layer happens on USB Addr:<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x01<br>\nCMD_RESP: 0x81</span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br>\nDATA_IMG_RESP: 0x82<br></span>\n<h3 id=\"commands-on-i2i-layer\">Commands on I2I Layer<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x40 + HEX_CMD</span>\n<ul>\n<li>Req_length</li>\n<li>Resp length<br></li>\n</ul>\n<h4 id=\"example-firmware-version-request\">Example firmware version request<br></h4>\n<span class=\"paragraph\">static const struct elanmoc_cmd fw_ver_cmd = {<br>\n  .cmd_header = {0x40, 0x19},<br>\n  .cmd_len = 2,<br>\n  .resp_len = 2,<br>\n}</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "cc2af55b0f7d696898b84344d1265132",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-and-processes-here-the-recorded-interaction-with-the-fingerprint\">Read and processes here the recorded interaction with the fingerprint\ud83c\udf86</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"try-to-emulate-cmds-only-works-on-linux-lol\">Try to emulate cmds only works on linux lol\ud83d\ude3a</h2></span>"
           }
         }
       ],
@@ -186,12 +199,12 @@
     },
     {
       "id": "ZHCJ",
-      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
+      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
       "outputs": [],
       "console": []
     },
     {
-      "id": "ROlb",
+      "id": "TqIu",
       "code_hash": "348e819da80c1cf0001fed7af1e9219c",
       "outputs": [
         {
@@ -204,19 +217,19 @@
       "console": []
     },
     {
-      "id": "qnkX",
+      "id": "Vxnm",
       "code_hash": "de6ee9db03331a0dc11e765f0859bfd9",
       "outputs": [],
       "console": []
     },
     {
-      "id": "TqIu",
+      "id": "DnEU",
       "code_hash": "2bfe8771278d7263f870f5b05589b51d",
       "outputs": [],
       "console": []
     },
     {
-      "id": "Vxnm",
+      "id": "ulZA",
       "code_hash": "568bdb98f0d6e4ef59b6087759aba4d2",
       "outputs": [
         {

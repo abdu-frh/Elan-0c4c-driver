@@ -92,7 +92,81 @@ def _(mo):
 def _():
     VENDOR_ID = 0x04F3
     PRODUCT_ID = 0x0C4C
-    return PRODUCT_ID, VENDOR_ID
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ##Finding more infomation about the Fingerprint, as a USB Device
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### needs to be run as administrator or root in unix⬇️
+    """)
+    return
+
+
+app._unparsable_cell(
+    r"""
+    import usb.util
+    import usb.core
+    import libusb_package
+
+    # Get the bundled backend
+    backend = libusb_package.get_libusb1_backend()
+
+    def find_device(
+        dev = usb.core.find(backend=backend, idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
+        if dev is None:
+            raise ValueError("Device not found")
+
+        return dev 
+
+    if __name__ == "__find_device__":
+        tmp = find_device()
+        print(tmp)
+    """,
+    name="_"
+)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ##Lists Configurations, Interface, Endpoints
+    Lol straight up stole from libusb docs
+    """)
+    return
+
+
+app._unparsable_cell(
+    r"""
+    def find_Endpoints():
+        device = find_device()
+        for cfg in dev:
+        sys.stdout.write(str(cfg.bConfigurationValue) + '\n')
+        for intf in cfg:
+            sys.stdout.write('\t' + \
+                             str(intf.bInterfaceNumber) + \
+                             ',' + \
+                             str(intf.bAlternateSetting) + \
+                             '\n')
+            for ep in intf:
+                sys.stdout.write('\t\t' + \
+                                 str(ep.bEndpointAddress) + \
+                                 '\n')
+
+    if __name__ == "__find_Endpoints__":
+        tmp = find_device(VENDOR_ID,PRODUCT_ID)
+        print(tmp)
+    """,
+    name="_"
+)
 
 
 @app.cell(hide_code=True)
@@ -152,38 +226,8 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### needs to be run as administrator or root in unix⬇️
-    """)
-    return
-
-
 @app.cell
-def _(PRODUCT_ID, VENDOR_ID):
-    import usb.util
-    import usb.core
-    import libusb_package
-
-    # Get the bundled backend
-    backend = libusb_package.get_libusb1_backend()
-
-    def find_device(vendor_id, product_id):
-        dev = usb.core.find(backend=backend, idVendor=vendor_id, idProduct=product_id)
-        if dev is None:
-            raise ValueError("Device not found")
-
-        return dev 
-
-    if __name__ == "__find_device__":
-        tmp = find_device(VENDOR_ID,PRODUCT_ID)
-        print(tmp)
-    return
-
-
-app._unparsable_cell(
-    r"""
+def _(find_device):
     import usb.core
     import usb.util
 
@@ -206,40 +250,9 @@ app._unparsable_cell(
 
     def find_and_config_device():
         dev = find_device()
-        intf = config_device(dev)
-        return dev intf
-    """,
-    name="_"
-)
+        return dev
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ##Searching for USB Endpoints
-    """)
     return
-
-
-app._unparsable_cell(
-    r"""
-    device intf = find_and_config_device()
-
-    def find_Endpoints(usb,intf):
-        ep_out = usb.util.find_descriptor(
-            intf,
-            custom_match=lambda e: 
-                usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
-        )
-        ep_in = usb.util.find_descriptor(
-            intf,
-            custom_match=lambda e: 
-                usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
-        )
-        return ep_out ep_int
-    """,
-    name="_"
-)
 
 
 @app.cell(hide_code=True)
