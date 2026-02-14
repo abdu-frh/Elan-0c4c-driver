@@ -18,6 +18,19 @@
       "console": []
     },
     {
+      "id": "vblA",
+      "code_hash": "c05ec15ccb0f8910f3b7484ee877c260",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"using-wireshark-open-source-drivers-from-older-elan-fingerprints-and-the-libusb-libary\">Using Wireshark, open source drivers from older Elan fingerprints and the Libusb libary</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
       "id": "MJUe",
       "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
       "outputs": [
@@ -31,26 +44,26 @@
       "console": []
     },
     {
-      "id": "vblA",
-      "code_hash": "80e3aee65f03fbb3ff9c0515992da55b",
+      "id": "lEQa",
+      "code_hash": "e11bb5f8a4d94ae979ef440d96bd8db9",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"using-wireshark-and-drivers-from-older-elan-fingerprint-version-from-libusb-libary\">Using Wireshark and drivers from older Elan fingerprint version from Libusb libary</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"current-knowledge\">Current Knowledge</h2>\n<span class=\"paragraph\">The devices is a complete arm mini computer with cpu, ram and storage.<br>\nIt manages the enrollment, verfication, storage and deletion of the fingerprints.</span>\n<span class=\"paragraph\">To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.</span></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "lEQa",
-      "code_hash": "cd8581809393b26b4ee7ca389d8e528f",
+      "id": "vTJt",
+      "code_hash": "86502eceb33b200377c0336082ea0717",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"commands-cause-windows-suck\">Commands cause windows suck\ud83d\ude44<br></h2>\n<span class=\"paragraph\">eval \"$(ssh-agent -s)\"<br>\nssh-add ~/.ssh/github</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"part-1-usb-protocoll-libusb-is-your-best-friend\">Part 1 USB-Protocoll: Libusb is your best friend \ud83e\udd17</h2></span>"
           }
         }
       ],
@@ -58,19 +71,6 @@
     },
     {
       "id": "PKri",
-      "code_hash": "e206453d2f7e917a8935ca7b7817858f",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"current-knowledge\">Current Knowledge</h2>\n<span class=\"paragraph\">The devices is a complete arm mini computer with cpu and storage.<br>\nIt manages the enroll, verfication, storage and deletion of the fingerprint.</span>\n<span class=\"paragraph\">To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "Xref",
       "code_hash": "0b4bdda5ced0cbc450f5791c17876e8b",
       "outputs": [
         {
@@ -83,7 +83,7 @@
       "console": []
     },
     {
-      "id": "SFPL",
+      "id": "Xref",
       "code_hash": "cd75561ba78dee69ea3e0e0a47b1015f",
       "outputs": [
         {
@@ -96,26 +96,26 @@
       "console": []
     },
     {
-      "id": "BYtC",
+      "id": "SFPL",
       "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
       "outputs": [],
       "console": []
     },
     {
-      "id": "grQC",
-      "code_hash": "6ad69c62aa62d7423f582ee43330f172",
+      "id": "EToT",
+      "code_hash": "b1410654f4afea7d84af8da3510a4b01",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"finding-more-infomation-about-the-fingerprint-as-a-usb-device\">Finding more infomation about the Fingerprint, as a USB Device</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"find-device-via-vendor-and-device-id\">Find device via Vendor and Device-ID</h2></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "nWHF",
+      "id": "RGSE",
       "code_hash": "a8f5f79787180210cc3dc3d76808e0bf",
       "outputs": [
         {
@@ -128,32 +128,32 @@
       "console": []
     },
     {
-      "id": "iLit",
-      "code_hash": "7abf6456a793c5718303213dd8dfaf2b",
+      "id": "Kclp",
+      "code_hash": "e113d9aeffa276fdd4870e2a8a4099f7",
       "outputs": [],
       "console": []
     },
     {
-      "id": "ROlb",
-      "code_hash": "197ac107abdd7286c31ba169f38b78ba",
+      "id": "emfo",
+      "code_hash": "ff38d38d29340c49ca3d6c24919c00a5",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"lists-configurations-interface-endpoints\">Lists Configurations, Interface, Endpoints</h2>\n<span class=\"paragraph\">Lol straight up stole from libusb docs</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"lists-descriptors-configurations-interface-endpoints\">Lists descriptors: Configurations, Interface, Endpoints</h2>\n<span class=\"paragraph\">Lol straight up stole from libusb docs</span></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "qnkX",
-      "code_hash": "ddc8481999a52bf592ea94b6b4593868",
+      "id": "Hstk",
+      "code_hash": "a3addcf6822d570ceff1f6a53a2fc798",
       "outputs": [],
       "console": []
     },
     {
-      "id": "RGSE",
+      "id": "nWHF",
       "code_hash": "7225bb95e102fec7131d8419fd521b0b",
       "outputs": [
         {
@@ -166,7 +166,20 @@
       "console": []
     },
     {
-      "id": "Kclp",
+      "id": "smYy",
+      "code_hash": "b8ae0a81be37d47c7410b63290b9f8a9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"wireshark-part\">Wireshark part\ud83e\udd88</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
       "code_hash": "cc2af55b0f7d696898b84344d1265132",
       "outputs": [
         {
@@ -179,13 +192,13 @@
       "console": []
     },
     {
-      "id": "emfo",
+      "id": "ZHCJ",
       "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
       "outputs": [],
       "console": []
     },
     {
-      "id": "Hstk",
+      "id": "ROlb",
       "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
       "outputs": [
         {
@@ -198,8 +211,8 @@
       "console": []
     },
     {
-      "id": "ZHCJ",
-      "code_hash": "1cce1b283e9e79d85e9e65af95a15bec",
+      "id": "qnkX",
+      "code_hash": "fec80309ff669e8cdb5e8b93ed280f7c",
       "outputs": [],
       "console": []
     },

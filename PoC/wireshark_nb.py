@@ -12,6 +12,14 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Using Wireshark, open source drivers from older Elan fingerprints and the Libusb libary
+    """)
+    return
+
+
 @app.cell
 def _():
     import marimo as mo
@@ -22,31 +30,20 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Using Wireshark and drivers from older Elan fingerprint version from Libusb libary
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Commands cause windows suck🙄<br>
-
-    eval "$(ssh-agent -s)"<br>
-    ssh-add ~/.ssh/github
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
     ## Current Knowledge
 
-    The devices is a complete arm mini computer with cpu and storage.<br>
-    It manages the enroll, verfication, storage and deletion of the fingerprint.
+    The devices is a complete arm mini computer with cpu, ram and storage.<br>
+    It manages the enrollment, verfication, storage and deletion of the fingerprints.
 
     To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Part 1 USB-Protocoll: Libusb is your best friend 🤗
     """)
     return
 
@@ -98,7 +95,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Finding more infomation about the Fingerprint, as a USB Device
+    ##Find device via Vendor and Device-ID
     """)
     return
 
@@ -138,7 +135,7 @@ app._unparsable_cell(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Lists Configurations, Interface, Endpoints
+    ##Lists descriptors: Configurations, Interface, Endpoints
     Lol straight up stole from libusb docs
     """)
     return
@@ -146,8 +143,8 @@ def _(mo):
 
 app._unparsable_cell(
     r"""
-    def find_Endpoints():
-        device = find_device()
+    def list_descriptors():
+        dev = find_device()
         for cfg in dev:
         sys.stdout.write(str(cfg.bConfigurationValue) + '\n')
         for intf in cfg:
@@ -161,9 +158,8 @@ app._unparsable_cell(
                                  str(ep.bEndpointAddress) + \
                                  '\n')
 
-    if __name__ == "__find_Endpoints__":
-        tmp = find_device(VENDOR_ID,PRODUCT_ID)
-        print(tmp)
+    if __name__ == "__list_descriptors__":
+        list_descriptors()
     """,
     name="_"
 )
@@ -191,6 +187,14 @@ def _(mo):
       .cmd_len = 2,<br>
       .resp_len = 2,<br>
     }
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ##Wireshark part🦈
     """)
     return
 
