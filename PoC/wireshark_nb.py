@@ -43,7 +43,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Part 1 USB-Protocoll: Libusb is your best friend 🤗
+    # Part 1 USB-Protocoll: Libusb is your best friend 🤗
     """)
     return
 
@@ -55,10 +55,18 @@ def _(mo):
 
     USB devices are organized in a tree structure: Device → Configuration → Interface → Endpoint.
 
-    Device contains: Vendor ID, Product ID and List of Configuration.<br>
-    Configuration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>
-    Example: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>
-    Endpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)
+    | Level | Contains |
+    |:------|:---------|
+    | **Device** | Vendor ID, Product ID, Configurations |
+    | **Configuration** | Power modes (usually just one) |
+    | **Interface** | Unique functions per configuration |
+    | **Endpoint** | Data channels (IN/OUT) |
+
+    **Endpoints:**
+    - `IN` — device to computer
+    - `OUT` — computer to device
+
+    **Transfer Types:** Bulk (large) · Interrupt (small) · Isochronous (streaming)
     """)
     return
 
@@ -66,21 +74,29 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##How to figure out DeviceID and VendorID
+    # How to figure out DeviceID and VendorID
 
-    command on linux: lsusb
+    **Command on Linux:**
 
-    ###Output:
-    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>
-    Bus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4<br>
-    Bus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line<br>
-    Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>
-    Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>
-    Bus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio<br>
-    Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>
+    ```bash
+    lsusb
+    ```
 
-    its always after the ID < VendorID : DeviceID > <br>
-    our Fingerprint device here is, the ELAN:ARM-M4, VendorID:04f3 DeviceID:0c4c
+    **Output:**
+
+    ```text
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4
+    Bus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line
+    Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+    Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio
+    Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+    ```
+
+    **Format:** `ID <VendorID>:<DeviceID>`
+
+    **Our fingerprint device:** `ELAN:ARM-M4` with VendorID `04f3` and DeviceID `0c4c`
     """)
     return
 
@@ -89,7 +105,7 @@ def _(mo):
 def _():
     VENDOR_ID = 0x04F3
     PRODUCT_ID = 0x0C4C
-    return
+    return PRODUCT_ID, VENDOR_ID
 
 
 @app.cell(hide_code=True)
@@ -108,8 +124,8 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
+@app.cell
+def _(PRODUCT_ID, VENDOR_ID):
     import usb.util
     import usb.core
     import libusb_package
@@ -117,76 +133,159 @@ app._unparsable_cell(
     # Get the bundled backend
     backend = libusb_package.get_libusb1_backend()
 
-    def find_device(
+    def find_device():
         dev = usb.core.find(backend=backend, idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
         if dev is None:
             raise ValueError("Device not found")
 
         return dev 
 
-    if __name__ == "__find_device__":
+    if __name__ == "__main__":
         tmp = find_device()
         print(tmp)
-    """,
-    name="_"
-)
+    return find_device, usb
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Lists descriptors: Configurations, Interface, Endpoints
-    Lol straight up stole from libusb docs
+    ## Specs for communication
+
+    **Endpoints:** 4 total (IN/OUT pairs)
+    **Config:** 1 | **Interface:** 1
+
+    | EP | IN | OUT | Type | Size |
+    |:--:|:--:|:---:|------|-----:|
+    | 1 | 0x81 | 0x1 | BULK | 64 B |
+    | 2 | 0x82 | 0x2 | BULK | 64 B |
+    | 3 | 0x83 | 0x3 | BULK | 64 B |
+    | 4 | 0x84 | 0x4 | BULK | 64 B |
     """)
     return
 
 
-app._unparsable_cell(
-    r"""
-    def list_descriptors():
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Try to do some cmds, (on linux) lol😺
+    """)
+    return
+
+
+@app.cell
+def _(find_device, usb):
+    from dataclasses import dataclass
+    import time
+
+    TIMEOUT_MS = 5000
+    CMD_PORT = 0x40
+
+    @dataclass
+    class USBCommand:
+        name: str
+        cmd: hex
+        payload: hex
+        resp_len: bytes
+        EP_IN: hex
+        EP_OUT: hex
+    
+    def init_device():
         dev = find_device()
-        for cfg in dev:
-        sys.stdout.write(str(cfg.bConfigurationValue) + '\n')
-        for intf in cfg:
-            sys.stdout.write('\t' + \
-                             str(intf.bInterfaceNumber) + \
-                             ',' + \
-                             str(intf.bAlternateSetting) + \
-                             '\n')
-            for ep in intf:
-                sys.stdout.write('\t\t' + \
-                                 str(ep.bEndpointAddress) + \
-                                 '\n')
+        if dev.is_kernel_driver_active(0):
+            dev.detach_kernel_driver(0)
+        dev.set_configuration()
+        usb.util.claim_interface(dev, 0)
+        return dev
 
-    if __name__ == "__list_descriptors__":
-        list_descriptors()
-    """,
-    name="_"
-)
+    return CMD_PORT, TIMEOUT_MS, USBCommand, init_device, time
+
+
+@app.cell
+def _(CMD_PORT, TIMEOUT_MS, USBCommand, time, usb):
+    def send_cmd(dev: usb.core.Device, cmd: USBCommand):
+        try:
+            print(f"Sending {cmd.name} command...")
+            dev.write(cmd.EP_OUT,bytes([CMD_PORT,cmd.cmd]))
+            print("Waiting for device processing...")
+            time.sleep(0.05)
+            response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
+            return response
+        except usb.core.USBTimeoutError:
+            print("ERROR: Timeout. Is the device ready?")
+        except Exception as e:
+            print(f"ERROR: {e}")
+
+    def cleanup(dev: usb.core.Device):
+        usb.util.release_interface(dev, 0)
+        usb.util.dispose_resources(dev)
+        print("Device released")    
+
+    return cleanup, send_cmd
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ###Commands on USB Layer happens on USB Addr:<br>
-    CMD_REQ: 0x01<br>
-    CMD_RESP: 0x81
+    ##Some cmd infomation from older driver
 
-    Data/Config_Upload: 0x02<br>
-    DATA_IMG_RESP: 0x82<br>
+    From `elanmoc.c`:
 
-    ### Commands on I2I Layer<br>
-    CMD_REQ: 0x40 + HEX_CMD
-    + Req_length
-    + Resp length<br>
+    ```c
+    static void elanmoc_cmd_ver_cb(FpiDeviceElanmoc *self, uint8_t *buffer_in,
+                                   gsize length_in, GError *error) {
+      if (error) {
+        fpi_ssm_mark_failed(self->task_ssm, error);
+        return;
+      }
 
-    #### Example firmware version request<br>
-
-    static const struct elanmoc_cmd fw_ver_cmd = {<br>
-      .cmd_header = {0x40, 0x19},<br>
-      .cmd_len = 2,<br>
-      .resp_len = 2,<br>
+      self->fw_ver = (buffer_in[0] << 8 | buffer_in[1]);
+      fp_info("elanmoc  FW Version %x ", self->fw_ver);
+      fpi_ssm_next_state(self->task_ssm);
     }
+    ```
+
+    From `elanmoc.h`:
+
+    ```c
+    static const struct elanmoc_cmd fw_ver_cmd = {
+      .cmd_header = {0x40, 0x19},
+      .cmd_len = 2,
+      .resp_len = 2,
+    };
+    ```
+    """)
+    return
+
+
+@app.cell
+def _(USBCommand):
+    fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,payload=None,resp_len=2,EP_IN=0x81,EP_OUT=0x01)
+    return (fw_ver_cmd,)
+
+
+@app.cell
+def _(cleanup, fw_ver_cmd, init_device, send_cmd):
+    def get_fw_version():
+        dev = init_device()
+        try:
+            resp = send_cmd(dev=dev,cmd=fw_ver_cmd)
+            if resp is None:
+                return
+            if len(resp) == fw_ver_cmd.resp_len:
+                fw_ver = (resp[0] << 8) | resp[1]
+                print(f"FW Version: {fw_ver:#06x}")
+        finally:
+            cleanup(dev=dev)
+
+    if __name__ == "__main__":
+        get_fw_version()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    #Wireshark🦈
     """)
     return
 
@@ -194,7 +293,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Wireshark part🦈
+    ## Trying to find the endpoints from recorded communication, from usage in windows
     """)
     return
 
@@ -220,120 +319,6 @@ def _():
 
     print(capture)
     return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Try to emulate cmds only works on linux lol😺
-    """)
-    return
-
-
-@app.cell
-def _(find_device):
-    import usb.core
-    import usb.util
-
-
-    def config_device(dev):
-        dev.set_configuration()
-
-        cfg = dev.get_active_configuration()
-        intf = cfg[(0, 0)]  # Interface 0, Alternate setting 0
-
-        # Detach kernel driver if attached (Linux/macOS)
-        if dev.is_kernel_driver_active(0):
-            print("Detaching kernel driver...")
-            dev.detach_kernel_driver(0)
-
-        # Claim interface
-        usb.util.claim_interface(dev, 0)
-
-        return intf
-
-    def find_and_config_device():
-        dev = find_device()
-        return dev
-
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Found USB Endpoints
-    """)
-    return
-
-
-@app.cell
-def _():
-    EP_OUT = 0x01  
-    EP_IN  = 0x81  
-    return
-
-
-app._unparsable_cell(
-    r"""
-    from dataclasses import dataclass
-    import time
-
-    TIMEOUT_MS = 5000
-    CMD_PORT = 0x40
-
-    @dataclass
-    class elan_cmd:
-        name: str
-        cmd: hex
-        payload: hex
-        resp_len: bytes
-
-    send_cmd(dev,cmd:elan_cmd):
-        # Claim interface
-        usb.util.claim_interface(dev, 0)
-
-        try:
-            print(f"Sending {cmd.name} command...")
-
-            CMD = bytes([CMD_PORT, cmd.cmd])  
-
-            # WRITE PHASE: Send to EP1 OUT (0x01)
-            bytes_written = dev.write(EP_OUT, CMD, timeout=TIMEOUT_MS)
-            print(f"Sent {bytes_written} bytes")
-
-            print("Waiting for device processing...")
-            time.sleep(0.05)
-
-            # READ PHASE: Read from EP1 IN (0x81)
-            resp = dev.read(EP_IN, 64, timeout=TIMEOUT_MS)
-
-            # Parse response (first resp_len bytes are valid)
-            if len(resp) >= cmd.resp_len:
-                version_major = resp[0]
-                version_minor = resp[1]
-                version_combined = (resp[0] << 8) | resp[1]
-
-                print(f"Response raw: {resp[:cmd.resp_len].hex()}")
-                print(f"Firmware Version: {version_major}.{version_minor} (0x{version_combined:04X})")
-                return resp[:cmd.resp_len]
-            else:
-                print(f"Short response: {resp.hex()}")
-                return resp
-
-        except usb.core.USBTimeoutError:
-            print("ERROR: Timeout. Is the device ready?")
-            raise
-        except Exception as e:
-            print(f"ERROR: {e}")
-            raise
-        finally:
-            # Cleanup
-            usb.util.release_interface(dev, 0)
-            print("Interface released")
-    """,
-    name="_"
-)
 
 
 @app.cell(hide_code=True)

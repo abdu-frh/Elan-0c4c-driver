@@ -18,7 +18,7 @@
       "console": []
     },
     {
-      "id": "vblA",
+      "id": "MJUe",
       "code_hash": "c05ec15ccb0f8910f3b7484ee877c260",
       "outputs": [
         {
@@ -31,7 +31,7 @@
       "console": []
     },
     {
-      "id": "MJUe",
+      "id": "vblA",
       "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
       "outputs": [
         {
@@ -44,7 +44,7 @@
       "console": []
     },
     {
-      "id": "lEQa",
+      "id": "bkHC",
       "code_hash": "e11bb5f8a4d94ae979ef440d96bd8db9",
       "outputs": [
         {
@@ -57,13 +57,13 @@
       "console": []
     },
     {
-      "id": "vTJt",
-      "code_hash": "86502eceb33b200377c0336082ea0717",
+      "id": "lEQa",
+      "code_hash": "1cd86341b70498faecdab284d65000a0",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"part-1-usb-protocoll-libusb-is-your-best-friend\">Part 1 USB-Protocoll: Libusb is your best friend \ud83e\udd17</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"part-1-usb-protocoll-libusb-is-your-best-friend\">Part 1 USB-Protocoll: Libusb is your best friend \ud83e\udd17</h1></span>"
           }
         }
       ],
@@ -71,12 +71,12 @@
     },
     {
       "id": "PKri",
-      "code_hash": "0b4bdda5ced0cbc450f5791c17876e8b",
+      "code_hash": "cc6cfb4b4e3388b5a4a9b3555d6e4a39",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<span class=\"paragraph\">Device contains: Vendor ID, Product ID and List of Configuration.<br>\nConfiguration: Are modes, like High power or Low power mode, most devices have only one mode. <br> Interface: Inside one configuartion, there are multiple interfaces. each represents a unique function. <br>\nExample: webcam has, Interface 0: Video camera, Interface 1: microphone, Interface 2: Speaker etc. <br>\nEndpoint: The Endpoints for each Interface/function: <br> IN endpoint: from device to computer. <br> OUT endpoint: from computer to device. <br> Types: Bulk(large package), interrupt(small packages), Isochronous (streaming data)</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Level</th>\n<th style=\"text-align: left;\">Contains</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>Device</strong></td>\n<td style=\"text-align: left;\">Vendor ID, Product ID, Configurations</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Configuration</strong></td>\n<td style=\"text-align: left;\">Power modes (usually just one)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Interface</strong></td>\n<td style=\"text-align: left;\">Unique functions per configuration</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Endpoint</strong></td>\n<td style=\"text-align: left;\">Data channels (IN/OUT)</td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\"><strong>Endpoints:</strong></span>\n<ul>\n<li><code>IN</code> \u2014 device to computer</li>\n<li><code>OUT</code> \u2014 computer to device</li>\n</ul>\n<span class=\"paragraph\"><strong>Transfer Types:</strong> Bulk (large) \u00b7 Interrupt (small) \u00b7 Isochronous (streaming)</span></span>"
           }
         }
       ],
@@ -84,12 +84,12 @@
     },
     {
       "id": "Xref",
-      "code_hash": "cd75561ba78dee69ea3e0e0a47b1015f",
+      "code_hash": "962bba3094213abe878942eb2863eeb6",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"how-to-figure-out-deviceid-and-vendorid\">How to figure out DeviceID and VendorID</h2>\n<span class=\"paragraph\">command on linux: lsusb</span>\n<h3 id=\"output\">Output:</h3>\n<span class=\"paragraph\">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>\nBus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4<br>\nBus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line<br>\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br>\nBus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio<br>\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br></span>\n<span class=\"paragraph\">its always after the ID &lt; VendorID : DeviceID &gt; <br>\nour Fingerprint device here is, the ELAN:ARM-M4, VendorID:04f3 DeviceID:0c4c</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"how-to-figure-out-deviceid-and-vendorid\">How to figure out DeviceID and VendorID</h1>\n<span class=\"paragraph\"><strong>Command on Linux:</strong></span>\n<div class=\"language-bash codehilite\"><pre><span></span><code>lsusb\n</code></pre></div>\n<span class=\"paragraph\"><strong>Output:</strong></span>\n<div class=\"language-text codehilite\"><pre><span></span><code>Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4\nBus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\n</code></pre></div>\n<span class=\"paragraph\"><strong>Format:</strong> <code>ID &lt;VendorID&gt;:&lt;DeviceID&gt;</code></span>\n<span class=\"paragraph\"><strong>Our fingerprint device:</strong> <code>ELAN:ARM-M4</code> with VendorID <code>04f3</code> and DeviceID <code>0c4c</code></span></span>"
           }
         }
       ],
@@ -98,11 +98,18 @@
     {
       "id": "SFPL",
       "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
-      "id": "EToT",
+      "id": "BYtC",
       "code_hash": "b1410654f4afea7d84af8da3510a4b01",
       "outputs": [
         {
@@ -129,57 +136,150 @@
     },
     {
       "id": "Kclp",
-      "code_hash": "e113d9aeffa276fdd4870e2a8a4099f7",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "emfo",
-      "code_hash": "ff38d38d29340c49ca3d6c24919c00a5",
+      "code_hash": "857143e0a2f8acbf39467e44aebd5c6b",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"lists-descriptors-configurations-interface-endpoints\">Lists descriptors: Configurations, Interface, Endpoints</h2>\n<span class=\"paragraph\">Lol straight up stole from libusb docs</span></span>"
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 005 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 Error Accessing String\n iProduct               :    0x2 Error Accessing String\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "d360194dcf44560de1f034e2257b2d7b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"specs-for-communication\">Specs for communication</h2>\n<span class=\"paragraph\"><strong>Endpoints:</strong> 4 total (IN/OUT pairs)\n<strong>Config:</strong> 1 | <strong>Interface:</strong> 1</span>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">EP</th>\n<th style=\"text-align: center;\">IN</th>\n<th style=\"text-align: center;\">OUT</th>\n<th>Type</th>\n<th style=\"text-align: right;\">Size</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">1</td>\n<td style=\"text-align: center;\">0x81</td>\n<td style=\"text-align: center;\">0x1</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2</td>\n<td style=\"text-align: center;\">0x82</td>\n<td style=\"text-align: center;\">0x2</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">3</td>\n<td style=\"text-align: center;\">0x83</td>\n<td style=\"text-align: center;\">0x3</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4</td>\n<td style=\"text-align: center;\">0x84</td>\n<td style=\"text-align: center;\">0x4</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n</tbody>\n</table></span>"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "Hstk",
-      "code_hash": "a3addcf6822d570ceff1f6a53a2fc798",
-      "outputs": [],
+      "id": "qnkX",
+      "code_hash": "206e77413ba462cd22d98f8d096c7c59",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"try-to-do-some-cmds-on-linux-lol\">Try to do some cmds, (on linux) lol\ud83d\ude3a</h1></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "nWHF",
-      "code_hash": "7225bb95e102fec7131d8419fd521b0b",
+      "code_hash": "bfbd44948c07048fdfbf313a8a5b0901",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"commands-on-usb-layer-happens-on-usb-addr\">Commands on USB Layer happens on USB Addr:<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x01<br>\nCMD_RESP: 0x81</span>\n<span class=\"paragraph\">Data/Config_Upload: 0x02<br>\nDATA_IMG_RESP: 0x82<br></span>\n<h3 id=\"commands-on-i2i-layer\">Commands on I2I Layer<br></h3>\n<span class=\"paragraph\">CMD_REQ: 0x40 + HEX_CMD</span>\n<ul>\n<li>Req_length</li>\n<li>Resp length<br></li>\n</ul>\n<h4 id=\"example-firmware-version-request\">Example firmware version request<br></h4>\n<span class=\"paragraph\">static const struct elanmoc_cmd fw_ver_cmd = {<br>\n  .cmd_header = {0x40, 0x19},<br>\n  .cmd_len = 2,<br>\n  .resp_len = 2,<br>\n}</span></span>"
+            "text/plain": ""
           }
         }
       ],
       "console": []
     },
     {
-      "id": "smYy",
-      "code_hash": "b8ae0a81be37d47c7410b63290b9f8a9",
+      "id": "TqIu",
+      "code_hash": "25876fd39cc1300f89f77980a70d5dad",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"wireshark-part\">Wireshark part\ud83e\udd88</h2></span>"
+            "text/plain": ""
           }
         }
       ],
       "console": []
+    },
+    {
+      "id": "lxLP",
+      "code_hash": "ce6a5ce219a2ea36c1cf9fa2f162793c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"some-cmd-infomation-from-older-driver\">Some cmd infomation from older driver</h2>\n<span class=\"paragraph\">From <code>elanmoc.c</code>:</span>\n<div class=\"language-c codehilite\"><pre><span></span><code><span class=\"k\">static</span><span class=\"w\"> </span><span class=\"kt\">void</span><span class=\"w\"> </span><span class=\"nf\">elanmoc_cmd_ver_cb</span><span class=\"p\">(</span><span class=\"n\">FpiDeviceElanmoc</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">self</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"kt\">uint8_t</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">buffer_in</span><span class=\"p\">,</span>\n<span class=\"w\">                               </span><span class=\"n\">gsize</span><span class=\"w\"> </span><span class=\"n\">length_in</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">GError</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">error</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"k\">if</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">error</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">    </span><span class=\"n\">fpi_ssm_mark_failed</span><span class=\"p\">(</span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">task_ssm</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">error</span><span class=\"p\">);</span>\n<span class=\"w\">    </span><span class=\"k\">return</span><span class=\"p\">;</span>\n<span class=\"w\">  </span><span class=\"p\">}</span>\n\n<span class=\"w\">  </span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">fw_ver</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">buffer_in</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">]</span><span class=\"w\"> </span><span class=\"o\">&lt;&lt;</span><span class=\"w\"> </span><span class=\"mi\">8</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">buffer_in</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">]);</span>\n<span class=\"w\">  </span><span class=\"n\">fp_info</span><span class=\"p\">(</span><span class=\"s\">&quot;elanmoc  FW Version %x &quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">fw_ver</span><span class=\"p\">);</span>\n<span class=\"w\">  </span><span class=\"n\">fpi_ssm_next_state</span><span class=\"p\">(</span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">task_ssm</span><span class=\"p\">);</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<span class=\"paragraph\">From <code>elanmoc.h</code>:</span>\n<div class=\"language-c codehilite\"><pre><span></span><code><span class=\"k\">static</span><span class=\"w\"> </span><span class=\"k\">const</span><span class=\"w\"> </span><span class=\"k\">struct</span><span class=\"w\"> </span><span class=\"nc\">elanmoc_cmd</span><span class=\"w\"> </span><span class=\"n\">fw_ver_cmd</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">cmd_header</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">{</span><span class=\"mh\">0x40</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"mh\">0x19</span><span class=\"p\">},</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">cmd_len</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"mi\">2</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">resp_len</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"mi\">2</span><span class=\"p\">,</span>\n<span class=\"p\">};</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "oiMh",
+      "code_hash": "20b3aacb48add9d06e8461958b9bc24f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Igbr",
+      "code_hash": "052ebf5d378808e26f90c67f7c986f66",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Sending get firmware version command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "iLit",
+      "code_hash": "8812d207fbba692609d8ceaf32f8b00f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"wireshark\">Wireshark\ud83e\udd88</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "WztM",
+      "code_hash": "77e512cbec345f6df7ec5cb28d3592a5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"trying-to-find-the-endpoints-from-recorded-communication-from-usage-in-windows\">Trying to find the endpoints from recorded communication, from usage in windows</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
       "code_hash": "cc2af55b0f7d696898b84344d1265132",
       "outputs": [
         {
@@ -192,57 +292,13 @@
       "console": []
     },
     {
-      "id": "ZHCJ",
+      "id": "ROlb",
       "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
       "outputs": [],
       "console": []
     },
     {
-      "id": "ROlb",
-      "code_hash": "3092a557fb3d0c291a47e426e0a2f222",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"try-to-emulate-cmds-only-works-on-linux-lol\">Try to emulate cmds only works on linux lol\ud83d\ude3a</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "qnkX",
-      "code_hash": "fec80309ff669e8cdb5e8b93ed280f7c",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "TqIu",
-      "code_hash": "348e819da80c1cf0001fed7af1e9219c",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"found-usb-endpoints\">Found USB Endpoints</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "Vxnm",
-      "code_hash": "de6ee9db03331a0dc11e765f0859bfd9",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "DnEU",
-      "code_hash": "2bfe8771278d7263f870f5b05589b51d",
-      "outputs": [],
-      "console": []
-    },
-    {
-      "id": "ulZA",
+      "id": "ecfG",
       "code_hash": "568bdb98f0d6e4ef59b6087759aba4d2",
       "outputs": [
         {
