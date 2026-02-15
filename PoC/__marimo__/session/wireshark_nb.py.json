@@ -97,7 +97,7 @@
     },
     {
       "id": "SFPL",
-      "code_hash": "74fc9d4ae8ebb014e3f277ceca795295",
+      "code_hash": "b60f068c06af5c31a508d1f4adfaacb1",
       "outputs": [
         {
           "type": "data",
@@ -149,7 +149,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 005 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 Error Accessing String\n iProduct               :    0x2 Error Accessing String\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
+          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 003 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 ELAN\n iProduct               :    0x2 ELAN:ARM-M4\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
           "mimetype": "text/plain"
         }
       ]
@@ -168,7 +168,7 @@
       "console": []
     },
     {
-      "id": "qnkX",
+      "id": "Hstk",
       "code_hash": "206e77413ba462cd22d98f8d096c7c59",
       "outputs": [
         {
@@ -182,7 +182,7 @@
     },
     {
       "id": "nWHF",
-      "code_hash": "bfbd44948c07048fdfbf313a8a5b0901",
+      "code_hash": "8b327defc1045b8783e998f9bc81fa44",
       "outputs": [
         {
           "type": "data",
@@ -194,8 +194,8 @@
       "console": []
     },
     {
-      "id": "TqIu",
-      "code_hash": "25876fd39cc1300f89f77980a70d5dad",
+      "id": "iLit",
+      "code_hash": "ea458621451957aaaf42ccdba254eb0e",
       "outputs": [
         {
           "type": "data",
@@ -207,7 +207,7 @@
       "console": []
     },
     {
-      "id": "lxLP",
+      "id": "ZHCJ",
       "code_hash": "ce6a5ce219a2ea36c1cf9fa2f162793c",
       "outputs": [
         {
@@ -220,72 +220,19 @@
       "console": []
     },
     {
-      "id": "oiMh",
-      "code_hash": "20b3aacb48add9d06e8461958b9bc24f",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
+      "id": "uCZV",
+      "code_hash": null,
+      "outputs": [],
       "console": []
     },
     {
-      "id": "Igbr",
-      "code_hash": "052ebf5d378808e26f90c67f7c986f66",
+      "id": "ZjAE",
+      "code_hash": "99313eb78fdf749562aea51a0d934c7c",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stdout",
-          "text": "Sending get firmware version command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released\n",
-          "mimetype": "text/plain"
-        }
-      ]
-    },
-    {
-      "id": "iLit",
-      "code_hash": "8812d207fbba692609d8ceaf32f8b00f",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"wireshark\">Wireshark\ud83e\udd88</h1></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "WztM",
-      "code_hash": "77e512cbec345f6df7ec5cb28d3592a5",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"trying-to-find-the-endpoints-from-recorded-communication-from-usage-in-windows\">Trying to find the endpoints from recorded communication, from usage in windows</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "ZHCJ",
-      "code_hash": "cc2af55b0f7d696898b84344d1265132",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-and-processes-here-the-recorded-interaction-with-the-fingerprint\">Read and processes here the recorded interaction with the fingerprint\ud83c\udf86</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Constant</th>\n<th>Calculation</th>\n<th>Hex</th>\n<th>Decimal</th>\n<th>Meaning</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>ELAN_EP_CMD_OUT</code></td>\n<td><code>0x1 \\| 0x00</code></td>\n<td><code>0x01</code></td>\n<td><strong>1</strong></td>\n<td>Endpoint 1, <strong>OUT</strong> (Host \u2192 Device)</td>\n</tr>\n<tr>\n<td><code>ELAN_EP_CMD_IN</code></td>\n<td><code>0x3 \\| 0x80</code></td>\n<td><code>0x83</code></td>\n<td><strong>131</strong></td>\n<td>Endpoint 3, <strong>IN</strong> (Device \u2192 Host)</td>\n</tr>\n<tr>\n<td><code>ELAN_EP_MOC_CMD_IN</code></td>\n<td><code>0x4 \\| 0x80</code></td>\n<td><code>0x84</code></td>\n<td><strong>132</strong></td>\n<td>Endpoint 4, <strong>IN</strong></td>\n</tr>\n<tr>\n<td><code>ELAN_EP_IMG_IN</code></td>\n<td><code>0x2 \\| 0x80</code></td>\n<td><code>0x82</code></td>\n<td><strong>130</strong></td>\n<td>Endpoint 2, <strong>IN</strong></td>\n</tr>\n</tbody>\n</table></span>"
           }
         }
       ],
@@ -293,8 +240,15 @@
     },
     {
       "id": "ROlb",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
-      "outputs": [],
+      "code_hash": "56fe9d30c3c7a474c99445be8f5891c5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
@@ -308,6 +262,71 @@
           }
         }
       ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "f102ac2429394ba2c52d7ce52e5898df",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Sending get firmware version command...\nWaiting for device processing...\nFW Version: 3.5\nDevice released\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "8812d207fbba692609d8ceaf32f8b00f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"wireshark\">Wireshark\ud83e\udd88</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "77e512cbec345f6df7ec5cb28d3592a5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"trying-to-find-the-endpoints-from-recorded-communication-from-usage-in-windows\">Trying to find the endpoints from recorded communication, from usage in windows</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "cc2af55b0f7d696898b84344d1265132",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-and-processes-here-the-recorded-interaction-with-the-fingerprint\">Read and processes here the recorded interaction with the fingerprint\ud83c\udf86</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
+      "outputs": [],
       "console": []
     }
   ]

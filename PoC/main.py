@@ -1,8 +1,3 @@
-import sys
-
-import usb.core
-import usbutil
-
 VENDOR_ID = 0x04F3
 PRODUCT_ID = 0x0C4C
 SUPPORTED_VERSION = 3.05
@@ -23,7 +18,5 @@ ERRORS = {
 }
 
 
-def handle_get_ver():
-    "header 0x40, 0x19"
-    "len 2"
-    "resp len 2"
+if __name__ == "__main__":
+    print(ERRORS[0x00])

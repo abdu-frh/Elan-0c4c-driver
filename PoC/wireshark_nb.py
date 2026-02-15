@@ -103,8 +103,8 @@ def _(mo):
 
 @app.cell
 def _():
-    VENDOR_ID = 0x04F3
-    PRODUCT_ID = 0x0C4C
+    VENDOR_ID = 0x04f3
+    PRODUCT_ID = 0x0c4c
     return PRODUCT_ID, VENDOR_ID
 
 
@@ -179,6 +179,7 @@ def _(find_device, usb):
 
     TIMEOUT_MS = 5000
     CMD_PORT = 0x40
+    Interface = 0
 
     @dataclass
     class USBCommand:
@@ -188,20 +189,25 @@ def _(find_device, usb):
         resp_len: bytes
         EP_IN: hex
         EP_OUT: hex
-    
+
     def init_device():
         dev = find_device()
-        if dev.is_kernel_driver_active(0):
-            dev.detach_kernel_driver(0)
+        if dev.is_kernel_driver_active(Interface):
+            dev.detach_kernel_driver(Interface)
         dev.set_configuration()
-        usb.util.claim_interface(dev, 0)
+        usb.util.claim_interface(dev, Interface)
         return dev
 
-    return CMD_PORT, TIMEOUT_MS, USBCommand, init_device, time
+    return CMD_PORT, Interface, TIMEOUT_MS, USBCommand, init_device, time
 
 
 @app.cell
-def _(CMD_PORT, TIMEOUT_MS, USBCommand, time, usb):
+def _(CMD_PORT, Interface, TIMEOUT_MS, USBCommand, time, usb):
+    def cleanup(dev: usb.core.Device):
+        usb.util.release_interface(dev, Interface)
+        usb.util.dispose_resources(dev)
+        print("Device released")    
+
     def send_cmd(dev: usb.core.Device, cmd: USBCommand):
         try:
             print(f"Sending {cmd.name} command...")
@@ -212,13 +218,10 @@ def _(CMD_PORT, TIMEOUT_MS, USBCommand, time, usb):
             return response
         except usb.core.USBTimeoutError:
             print("ERROR: Timeout. Is the device ready?")
+            cleanup(dev=dev)
         except Exception as e:
             print(f"ERROR: {e}")
-
-    def cleanup(dev: usb.core.Device):
-        usb.util.release_interface(dev, 0)
-        usb.util.dispose_resources(dev)
-        print("Device released")    
+            cleanup(dev=dev)
 
     return cleanup, send_cmd
 
@@ -258,9 +261,46 @@ def _(mo):
 
 
 @app.cell
+def _():
+    ERRORS = {
+        0xFD: "ELAN_MSG_VERIFY_ERR",
+        0xFB: "ELAN_MSG_DIRTY",
+        0xFE: "ELAN_MSG_AREA_NOT_ENOUGH",
+        0x41: "ELAN_MSG_TOO_HIGH",
+        0x42: "ELAN_MSG_TOO_LEFT",
+        0x43: "ELAN_MSG_TOO_LOW",
+        0x44: "ELAN_MSG_TOO_RIGHT",
+        0x00: "ELAN_MSG_OK",
+    }
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    | Constant | Calculation | Hex | Decimal | Meaning |
+    |----------|-------------|-----|---------|---------|
+    | `ELAN_EP_CMD_OUT` | `0x1 \| 0x00` | `0x01` | **1** | Endpoint 1, **OUT** (Host → Device) |
+    | `ELAN_EP_CMD_IN` | `0x3 \| 0x80` | `0x83` | **131** | Endpoint 3, **IN** (Device → Host) |
+    | `ELAN_EP_MOC_CMD_IN` | `0x4 \| 0x80` | `0x84` | **132** | Endpoint 4, **IN** |
+    | `ELAN_EP_IMG_IN` | `0x2 \| 0x80` | `0x82` | **130** | Endpoint 2, **IN** |
+    """)
+    return
+
+
+@app.cell
 def _(USBCommand):
-    fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,payload=None,resp_len=2,EP_IN=0x81,EP_OUT=0x01)
+    fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,payload=None,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+
     return (fw_ver_cmd,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Get Firmware Version
+    """)
+    return
 
 
 @app.cell
@@ -272,8 +312,7 @@ def _(cleanup, fw_ver_cmd, init_device, send_cmd):
             if resp is None:
                 return
             if len(resp) == fw_ver_cmd.resp_len:
-                fw_ver = (resp[0] << 8) | resp[1]
-                print(f"FW Version: {fw_ver:#06x}")
+                print(f"FW Version: {resp[0]}.{resp[1]}")
         finally:
             cleanup(dev=dev)
 
@@ -318,14 +357,6 @@ def _():
     capture.load_packets()
 
     print(capture)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Get Firmware Version
-    """)
     return
 
 
