@@ -178,13 +178,14 @@ def _(find_device, usb):
     import time
 
     TIMEOUT_MS = 5000
-    CMD_PORT = 0x40
+    #CMD_PORT = 0x40
     Interface = 0
 
     @dataclass
     class USBCommand:
         name: str
         cmd: hex
+        CMD_PORT: hex
         payload: hex
         resp_len: bytes
         EP_IN: hex
@@ -198,11 +199,11 @@ def _(find_device, usb):
         usb.util.claim_interface(dev, Interface)
         return dev
 
-    return CMD_PORT, Interface, TIMEOUT_MS, USBCommand, init_device, time
+    return Interface, TIMEOUT_MS, USBCommand, init_device, time
 
 
 @app.cell
-def _(CMD_PORT, Interface, TIMEOUT_MS, USBCommand, time, usb):
+def _(Interface, TIMEOUT_MS, USBCommand, time, usb):
     def cleanup(dev: usb.core.Device):
         usb.util.release_interface(dev, Interface)
         usb.util.dispose_resources(dev)
@@ -211,7 +212,10 @@ def _(CMD_PORT, Interface, TIMEOUT_MS, USBCommand, time, usb):
     def send_cmd(dev: usb.core.Device, cmd: USBCommand):
         try:
             print(f"Sending {cmd.name} command...")
-            dev.write(cmd.EP_OUT,bytes([CMD_PORT,cmd.cmd]))
+            if cmd.payload == None:
+                dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd]))
+            else: 
+                dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd,cmd.payload]))
             print("Waiting for device processing...")
             time.sleep(0.05)
             response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
@@ -290,9 +294,22 @@ def _(mo):
 
 @app.cell
 def _(USBCommand):
-    fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,payload=None,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+    #funktioniert
+    fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,CMD_PORT=0x40,payload=None,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+    enrolled_number_cmd = USBCommand(name="enrolled number",cmd=0xff,CMD_PORT=0x40,payload=0x04,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+    cal_status_cmd = USBCommand(name="cal status cmd",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+    elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
 
-    return (fw_ver_cmd,)
+    #funktioniert nicht
+    elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
+
+    return (
+        cal_status_cmd,
+        elanmoc_get_userid_cmd,
+        elanmoc_verify_cmd,
+        enrolled_number_cmd,
+        fw_ver_cmd,
+    )
 
 
 @app.cell(hide_code=True)
@@ -304,20 +321,96 @@ def _(mo):
 
 
 @app.cell
-def _(cleanup, fw_ver_cmd, init_device, send_cmd):
+def _(
+    cal_status_cmd,
+    cleanup,
+    elanmoc_get_userid_cmd,
+    elanmoc_verify_cmd,
+    enrolled_number_cmd,
+    fw_ver_cmd,
+    init_device,
+    resplen,
+    send_cmd,
+):
     def get_fw_version():
-        dev = init_device()
+        device = init_device()
         try:
-            resp = send_cmd(dev=dev,cmd=fw_ver_cmd)
+            resp = send_cmd(dev=device,cmd=fw_ver_cmd)
             if resp is None:
                 return
-            if len(resp) == fw_ver_cmd.resp_len:
-                print(f"FW Version: {resp[0]}.{resp[1]}")
+            fw_ver_cmd.resp_len
+            acctual_len = len(resp)
+            if len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            print(f"FW Version: {resp[0]}.{resp[1]}")
         finally:
-            cleanup(dev=dev)
+            cleanup(dev=device)
+
+    def get_userid():
+        device = init_device()
+        try:
+            resp = send_cmd(dev=device,cmd=elanmoc_get_userid_cmd)
+            if resp is None:
+                return
+            resplen = elanmoc_get_userid_cmd.resp_len
+            acctual_len = len(resp)
+            if len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            print(resp)
+        finally:
+            if resp != None:
+                cleanup(dev=device)
+
+    def get_enrolled_number():
+        device = init_device()
+        try:
+            resp = send_cmd(dev=device,cmd=enrolled_number_cmd)
+            if resp is None:
+                return
+            resplen = enrolled_number_cmd.resp_len
+            acctual_len = len(resp)
+            if len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            print(resp)
+        finally:
+            if resp != None:
+                cleanup(dev=device)
+
+    def get_status():
+        device = init_device()
+        try:
+            resp = send_cmd(dev=device,cmd=cal_status_cmd)
+            if resp is None:
+                return
+            resplen = cal_status_cmd.resp_len
+            acctual_len = len(resp)
+            if len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            print(resp)
+        finally:
+            if resp != None:
+                cleanup(dev=device)
+
+    def verify():
+        device = init_device()
+        try:
+            resp = send_cmd(dev=device,cmd=elanmoc_verify_cmd)
+            if resp is None:
+                return
+            resplen = elanmoc_verify_cmd.resp_len
+            acctual_len = len(resp)
+            if len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            print(resp)
+        finally:
+            if resp != None:
+                cleanup(dev=device)
 
     if __name__ == "__main__":
-        get_fw_version()
+        #get_fw_version()
+        #get_userid()
+        #get_enrolled_number()
+        get_status()
     return
 
 

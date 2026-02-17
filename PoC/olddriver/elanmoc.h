@@ -97,7 +97,7 @@ static const struct elanmoc_cmd elanmoc_above_cmd = {
   .resp_len = 0,
 };
 
-static const struct elanmoc_cmd elanmoc_enroll_cmd = {
+static const struct elanmoc_cmd elanmoc_enroll_cmd = {  //Command when fingerprint is ready for reaciving fingerprint
   .cmd_header = {0x40, 0xff, 0x01},
   .cmd_len = 7,
   .resp_len = 2,
