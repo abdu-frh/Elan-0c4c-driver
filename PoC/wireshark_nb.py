@@ -299,12 +299,18 @@ def _(USBCommand):
     enrolled_number_cmd = USBCommand(name="enrolled number",cmd=0xff,CMD_PORT=0x40,payload=0x04,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     cal_status_cmd = USBCommand(name="cal status",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
 
-    # not eorking
+    #testing
+
+    # needs wireshark
+    elanmoc_remove_all_cmd = USBCommand(name="delete all",cmd=0xff,CMD_PORT=0x40,payload=0x98,resp_len=2,EP_IN=0x84,EP_OUT=0x01)
+    elanmoc_set_mod_cmd = USBCommand(name="set mode",cmd=0xff,CMD_PORT=0x40,payload=0x14,resp_len=2,EP_IN=0x83,EP_OUT=0x01,)
     elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
     elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     return (
         cal_status_cmd,
         elanmoc_get_userid_cmd,
+        elanmoc_remove_all_cmd,
+        elanmoc_set_mod_cmd,
         elanmoc_verify_cmd,
         enrolled_number_cmd,
         fw_ver_cmd,
@@ -328,11 +334,12 @@ def _(
     cal_status_cmd,
     cleanup,
     elanmoc_get_userid_cmd,
+    elanmoc_remove_all_cmd,
+    elanmoc_set_mod_cmd,
     elanmoc_verify_cmd,
     enrolled_number_cmd,
     fw_ver_cmd,
     init_device,
-    resplen,
     send_cmd,
 ):
     def get_fw_version():
@@ -341,28 +348,42 @@ def _(
             resp = send_cmd(dev=device,cmd=fw_ver_cmd)
             if resp is None:
                 return
-            fw_ver_cmd.resp_len
+            resplen = fw_ver_cmd.resp_len
             actual_len = len(resp)
-            if actual_len != resplen :
+            if actual_len != resplen:
                 print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
             print(f"FW Version: {resp[0]}.{resp[1]}.")
         finally:
             cleanup(dev=device)
-
-    def get_userid():
+        
+    def set_mode():
         device = init_device()
         try:
-            resp = send_cmd(dev=device,cmd=elanmoc_get_userid_cmd)
+            resp = send_cmd(dev=device,cmd=elanmoc_set_mod_cmd)
             if resp is None:
                 return
-            resplen = elanmoc_get_userid_cmd.resp_len
+            resplen = fw_ver_cmd.resp_len
             actual_len = len(resp)
             if actual_len != resplen :
                 print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
             print(resp)
         finally:
-            if resp != None:
-                cleanup(dev=device)
+            cleanup(dev=device)
+
+    #def get_userid():
+    #  device = init_device()
+    #  try:
+    #      resp = send_cmd(dev=device,cmd=elanmoc_get_userid_cmd)
+    #       if resp is None:
+    #            return
+    #        resplen = elanmoc_get_userid_cmd.resp_len
+    #        actual_len = len(resp)
+    #        if actual_len != resplen :
+    #            print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
+    #        print(resp)
+    #    finally:
+    #        if resp != None:
+    #           cleanup(dev=device)
 
     def get_enrolled_number():
         device = init_device()
@@ -379,6 +400,26 @@ def _(
             if resp != None:
                 cleanup(dev=device)
 
+    def get_all_userids():
+        device = init_device()
+        try:
+            # First get how many are enrolled
+            resp = send_cmd(dev=device, cmd=enrolled_number_cmd)
+            count = resp[1]
+            print(f"Enrolled fingers: {count}")
+
+            # Then query each one by index
+            for i in range(count):
+                elanmoc_get_userid_cmd.payload = i
+                resp = send_cmd(dev=device, cmd=elanmoc_get_userid_cmd)
+                if resp:
+                    # User ID starts after some header bytes
+                    user_id = resp[3:].tobytes().rstrip(b'\x00').decode('utf-8', errors='ignore')
+                    print(f"Finger {i}: {user_id}")
+        finally:
+            cleanup(dev=device)
+
+
     def get_status():
         device = init_device()
         try:
@@ -386,6 +427,25 @@ def _(
             if resp is None:
                 return
             resplen = cal_status_cmd.resp_len
+            actual_len = len(resp)
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
+            status = resp[1]
+            if status == 3:
+                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrated and ready to go.")
+            else:
+                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrating.")
+        finally:
+            if resp != None:
+                cleanup(dev=device)
+
+    def delete_all():
+        device = init_device()
+        try:
+            resp = send_cmd(dev=device,cmd=elanmoc_remove_all_cmd)
+            if resp is None:
+                return
+            resplen = elanmoc_remove_all_cmd.resp_len
             actual_len = len(resp)
             if actual_len != resplen :
                 print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
@@ -418,8 +478,12 @@ def _(
     if __name__ == "__main__":
         #get_fw_version()
         #get_enrolled_number()
-        #get_status()
-        get_userid()
+        #et_status()
+        #set_mode()
+        #get_all_userids()
+        delete_all()
+        #sleep(1000)
+        get_enrolled_number()
 
     return
 

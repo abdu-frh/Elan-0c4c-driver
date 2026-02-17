@@ -240,7 +240,7 @@
     },
     {
       "id": "TqIu",
-      "code_hash": "f956f9fa470c6ca479138adce1c34849",
+      "code_hash": "67eeb239214d98a910f8902c093bb5a7",
       "outputs": [
         {
           "type": "data",
@@ -266,7 +266,7 @@
     },
     {
       "id": "DnEU",
-      "code_hash": "a6f0b7c7a639c0708607dc1ccbfb8c83",
+      "code_hash": "1dadf10caffff7fdf064d837f50a5b39",
       "outputs": [
         {
           "type": "data",
@@ -279,7 +279,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "Sending get all user command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released.\n",
+          "text": "Sending delete all command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released.\nSending enrolled number command...\nWaiting for device processing...\nEnrolled fingers 2.\nDevice released.\n",
           "mimetype": "text/plain"
         }
       ]
