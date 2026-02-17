@@ -33,7 +33,14 @@
     {
       "id": "vblA",
       "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
@@ -188,7 +195,7 @@
     },
     {
       "id": "iLit",
-      "code_hash": "42c5dbecf36c6fbad8a7fc4dd46696f9",
+      "code_hash": "9242e9f6b9a624a3bf4a2a246d3de753",
       "outputs": [
         {
           "type": "data",
@@ -245,13 +252,13 @@
       "console": []
     },
     {
-      "id": "Vxnm",
-      "code_hash": "568bdb98f0d6e4ef59b6087759aba4d2",
+      "id": "NVri",
+      "code_hash": "b0842fd67c9118957e95390b7e364d9c",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"get-firmware-version\">Get Firmware Version</h3></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"cal_status_cmd\">cal_status_cmd</h3>\n<span class=\"paragraph\">This command is used during DEV_WAIT_READY and is retried up to ELAN_MOC_CAL_RETRY (500) times. The driver keeps polling this command until the sensor reports it's calibrated and ready.</span>\n<span class=\"paragraph\">A value of 0x03 means calibration complete / sensor ready \u2014 so your sensor is good to go</span></span>"
           }
         }
       ],
@@ -259,7 +266,7 @@
     },
     {
       "id": "DnEU",
-      "code_hash": "6d5fcdc14647bf9adfe32940dc1ca46f",
+      "code_hash": "a6f0b7c7a639c0708607dc1ccbfb8c83",
       "outputs": [
         {
           "type": "data",
@@ -272,7 +279,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "Sending enrolled number command...\nWaiting for device processing...\nEnrolled fingers 2\nDevice released\n",
+          "text": "Sending get all user command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released.\n",
           "mimetype": "text/plain"
         }
       ]

@@ -207,7 +207,7 @@ def _(Interface, TIMEOUT_MS, USBCommand, time, usb):
     def cleanup(dev: usb.core.Device):
         usb.util.release_interface(dev, Interface)
         usb.util.dispose_resources(dev)
-        print("Device released")    
+        print("Device released.")    
 
     def send_cmd(dev: usb.core.Device, cmd: USBCommand):
         try:
@@ -294,12 +294,12 @@ def _(mo):
 
 @app.cell
 def _(USBCommand):
-    #funktioniert
+    # working
     fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,CMD_PORT=0x40,payload=None,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     enrolled_number_cmd = USBCommand(name="enrolled number",cmd=0xff,CMD_PORT=0x40,payload=0x04,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     cal_status_cmd = USBCommand(name="cal status",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
 
-    #funktioniert nicht
+    # not eorking
     elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
     elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     return (
@@ -314,7 +314,11 @@ def _(USBCommand):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Get Firmware Version
+    ### cal_status_cmd
+
+    This command is used during DEV_WAIT_READY and is retried up to ELAN_MOC_CAL_RETRY (500) times. The driver keeps polling this command until the sensor reports it's calibrated and ready.
+
+    A value of 0x03 means calibration complete / sensor ready — so your sensor is good to go
     """)
     return
 
@@ -339,9 +343,9 @@ def _(
                 return
             fw_ver_cmd.resp_len
             actual_len = len(resp)
-            if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
-            print(f"FW Version: {resp[0]}.{resp[1]}")
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
+            print(f"FW Version: {resp[0]}.{resp[1]}.")
         finally:
             cleanup(dev=device)
 
@@ -353,8 +357,8 @@ def _(
                 return
             resplen = elanmoc_get_userid_cmd.resp_len
             actual_len = len(resp)
-            if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
             print(resp)
         finally:
             if resp != None:
@@ -369,8 +373,8 @@ def _(
             resplen = enrolled_number_cmd.resp_len
             actual_len = len(resp)
             if actual_len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
-            print(f"Enrolled fingers {resp[1]}")
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
+            print(f"Enrolled fingers {resp[1]}.")
         finally:
             if resp != None:
                 cleanup(dev=device)
@@ -384,8 +388,12 @@ def _(
             resplen = cal_status_cmd.resp_len
             actual_len = len(resp)
             if actual_len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
-            print(resp)
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
+            status = resp[1]
+            if status == 3:
+                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrated and ready to go.")
+            else:
+                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrating.")
         finally:
             if resp != None:
                 cleanup(dev=device)
@@ -401,7 +409,7 @@ def _(
             resplen = elanmoc_verify_cmd.resp_len
             actual_len = len(resp)
             if actual_len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
             print(resp)
         finally:
             if resp != None:
@@ -409,9 +417,10 @@ def _(
 
     if __name__ == "__main__":
         #get_fw_version()
-        #get_userid()
-        get_enrolled_number()
+        #get_enrolled_number()
         #get_status()
+        get_userid()
+
     return
 
 
