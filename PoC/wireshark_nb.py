@@ -297,12 +297,11 @@ def _(USBCommand):
     #funktioniert
     fw_ver_cmd = USBCommand(name="get firmware version",cmd=0x19,CMD_PORT=0x40,payload=None,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     enrolled_number_cmd = USBCommand(name="enrolled number",cmd=0xff,CMD_PORT=0x40,payload=0x04,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
-    cal_status_cmd = USBCommand(name="cal status cmd",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
-    elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+    cal_status_cmd = USBCommand(name="cal status",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
 
     #funktioniert nicht
     elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
-
+    elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     return (
         cal_status_cmd,
         elanmoc_get_userid_cmd,
@@ -339,9 +338,9 @@ def _(
             if resp is None:
                 return
             fw_ver_cmd.resp_len
-            acctual_len = len(resp)
+            actual_len = len(resp)
             if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
             print(f"FW Version: {resp[0]}.{resp[1]}")
         finally:
             cleanup(dev=device)
@@ -353,9 +352,9 @@ def _(
             if resp is None:
                 return
             resplen = elanmoc_get_userid_cmd.resp_len
-            acctual_len = len(resp)
+            actual_len = len(resp)
             if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
             print(resp)
         finally:
             if resp != None:
@@ -368,10 +367,10 @@ def _(
             if resp is None:
                 return
             resplen = enrolled_number_cmd.resp_len
-            acctual_len = len(resp)
-            if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
-            print(resp)
+            actual_len = len(resp)
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
+            print(f"Enrolled fingers {resp[1]}")
         finally:
             if resp != None:
                 cleanup(dev=device)
@@ -383,14 +382,16 @@ def _(
             if resp is None:
                 return
             resplen = cal_status_cmd.resp_len
-            acctual_len = len(resp)
-            if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            actual_len = len(resp)
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
             print(resp)
         finally:
             if resp != None:
                 cleanup(dev=device)
 
+
+    # funktioniert nicht 
     def verify():
         device = init_device()
         try:
@@ -398,9 +399,9 @@ def _(
             if resp is None:
                 return
             resplen = elanmoc_verify_cmd.resp_len
-            acctual_len = len(resp)
-            if len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {acctual_len}")
+            actual_len = len(resp)
+            if actual_len != resplen :
+                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}")
             print(resp)
         finally:
             if resp != None:
@@ -409,8 +410,8 @@ def _(
     if __name__ == "__main__":
         #get_fw_version()
         #get_userid()
-        #get_enrolled_number()
-        get_status()
+        get_enrolled_number()
+        #get_status()
     return
 
 

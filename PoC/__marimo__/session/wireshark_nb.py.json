@@ -233,7 +233,7 @@
     },
     {
       "id": "TqIu",
-      "code_hash": "13c88cb34233b091f2391a110e43503e",
+      "code_hash": "f956f9fa470c6ca479138adce1c34849",
       "outputs": [
         {
           "type": "data",
@@ -259,7 +259,7 @@
     },
     {
       "id": "DnEU",
-      "code_hash": "3e9a9912c79293eeb77b4c25994b43e2",
+      "code_hash": "6d5fcdc14647bf9adfe32940dc1ca46f",
       "outputs": [
         {
           "type": "data",
@@ -272,7 +272,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "Sending cal status cmd command...\nWaiting for device processing...\nsomething went wrong, expected resp_len 2, actutal: 2\narray('B', [64, 3])\nDevice released\n",
+          "text": "Sending enrolled number command...\nWaiting for device processing...\nEnrolled fingers 2\nDevice released\n",
           "mimetype": "text/plain"
         }
       ]
