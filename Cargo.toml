@@ -1,6 +1,0 @@
-[package]
-name = "elan-04f3-fingerprint"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
