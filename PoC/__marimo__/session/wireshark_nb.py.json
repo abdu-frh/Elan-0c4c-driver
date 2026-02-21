@@ -31,19 +31,6 @@
       "console": []
     },
     {
-      "id": "vblA",
-      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "bkHC",
       "code_hash": "e11bb5f8a4d94ae979ef440d96bd8db9",
       "outputs": [
@@ -96,19 +83,6 @@
       "console": []
     },
     {
-      "id": "SFPL",
-      "code_hash": "b60f068c06af5c31a508d1f4adfaacb1",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "BYtC",
       "code_hash": "b1410654f4afea7d84af8da3510a4b01",
       "outputs": [
@@ -133,26 +107,6 @@
         }
       ],
       "console": []
-    },
-    {
-      "id": "Kclp",
-      "code_hash": "857143e0a2f8acbf39467e44aebd5c6b",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stdout",
-          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 002 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 ELAN\n iProduct               :    0x2 ELAN:ARM-M4\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
-          "mimetype": "text/plain"
-        }
-      ]
     },
     {
       "id": "emfo",
@@ -181,32 +135,6 @@
       "console": []
     },
     {
-      "id": "nWHF",
-      "code_hash": "deb78cc2c88d5f7004932c9c41c8b0d3",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "iLit",
-      "code_hash": "9242e9f6b9a624a3bf4a2a246d3de753",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "ZHCJ",
       "code_hash": "ce6a5ce219a2ea36c1cf9fa2f162793c",
       "outputs": [
@@ -217,12 +145,6 @@
           }
         }
       ],
-      "console": []
-    },
-    {
-      "id": "ROlb",
-      "code_hash": "0b9e6014489025d592a98c41fce0b63a",
-      "outputs": [],
       "console": []
     },
     {
@@ -239,20 +161,7 @@
       "console": []
     },
     {
-      "id": "TqIu",
-      "code_hash": "67eeb239214d98a910f8902c093bb5a7",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "NVri",
+      "id": "Vxnm",
       "code_hash": "b0842fd67c9118957e95390b7e364d9c",
       "outputs": [
         {
@@ -263,26 +172,6 @@
         }
       ],
       "console": []
-    },
-    {
-      "id": "DnEU",
-      "code_hash": "1dadf10caffff7fdf064d837f50a5b39",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stdout",
-          "text": "Sending delete all command...\nWaiting for device processing...\nERROR: Timeout. Is the device ready?\nDevice released.\nSending enrolled number command...\nWaiting for device processing...\nEnrolled fingers 2.\nDevice released.\n",
-          "mimetype": "text/plain"
-        }
-      ]
     },
     {
       "id": "ulZA",
@@ -299,12 +188,12 @@
     },
     {
       "id": "ecfG",
-      "code_hash": "77e512cbec345f6df7ec5cb28d3592a5",
+      "code_hash": "c9e3a7f683f7460c50a3981eeb5c6b02",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"trying-to-find-the-endpoints-from-recorded-communication-from-usage-in-windows\">Trying to find the endpoints from recorded communication, from usage in windows</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"commands-to-capture-usb-traffic-in-linux\">Commands to Capture USB Traffic in Linux</h2>\n<span class=\"paragraph\"><code>sudo modprobe usbmon</code> loads module thats enables us to capture usb traffic\n<code>sudo wiresharl</code> needed for</span></span>"
           }
         }
       ],
@@ -312,6 +201,32 @@
     },
     {
       "id": "Pvdt",
+      "code_hash": "d0103462c87295ce170cd919d6657ee0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><code>Filters:</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 3 &amp;&amp; usb.data_flag == 0</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "01708309c16710e22f174dc952367175",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Send cmd and watch traffic with wireshark <br> Section: Leftover Capture Data, is where you can find CMD_PORT:CMD:PAYLOAD <br> example get_enrolled_number: 40ff04</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
       "code_hash": "cc2af55b0f7d696898b84344d1265132",
       "outputs": [
         {
@@ -324,8 +239,74 @@
       "console": []
     },
     {
-      "id": "ZBYS",
-      "code_hash": "8b798b65d26ad7113b32ee70efb284b9",
+      "id": "vblA",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "b60f068c06af5c31a508d1f4adfaacb1",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "857143e0a2f8acbf39467e44aebd5c6b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "deb78cc2c88d5f7004932c9c41c8b0d3",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "9242e9f6b9a624a3bf4a2a246d3de753",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "0b9e6014489025d592a98c41fce0b63a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "ff28fc254c27c172664af3cd94a601b7",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "4d1b477b1b810a34288be41bf0e82d50",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "9551d6dd3364ade39bb122c1f7efa2e7",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "baeb0e57d3813845500d011c3a7cf847",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "c00f99350f595200cd9418b1bfbef20f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "cd703233c4d575aaedfb3cd720f85a97",
       "outputs": [],
       "console": []
     }

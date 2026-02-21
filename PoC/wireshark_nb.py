@@ -199,7 +199,7 @@ def _(find_device, usb):
         usb.util.claim_interface(dev, Interface)
         return dev
 
-    return Interface, TIMEOUT_MS, USBCommand, init_device, time
+    return Interface, TIMEOUT_MS, USBCommand, dataclass, init_device, time
 
 
 @app.cell
@@ -355,7 +355,7 @@ def _(
             print(f"FW Version: {resp[0]}.{resp[1]}.")
         finally:
             cleanup(dev=device)
-        
+
     def set_mode():
         device = init_device()
         try:
@@ -477,14 +477,13 @@ def _(
 
     if __name__ == "__main__":
         #get_fw_version()
-        #get_enrolled_number()
+        get_enrolled_number()
         #et_status()
         #set_mode()
         #get_all_userids()
-        delete_all()
+        #delete_all()
         #sleep(1000)
-        get_enrolled_number()
-
+        #get_enrolled_number()
     return
 
 
@@ -499,7 +498,26 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Trying to find the endpoints from recorded communication, from usage in windows
+    ## Commands to Capture USB Traffic in Linux
+
+    `sudo modprobe usbmon` loads module thats enables us to capture usb traffic
+    `sudo wiresharl` needed for
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    `Filters:` usb.bus_id == 1 && usb.device_address == 3 && usb.data_flag == 0
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Send cmd and watch traffic with wireshark <br> Section: Leftover Capture Data, is where you can find CMD_PORT:CMD:PAYLOAD <br> example get_enrolled_number: 40ff04
     """)
     return
 
@@ -513,17 +531,203 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(dataclass):
+    from typing import Optional, List, Tuple
+    from datetime import datetime
     import nest_asyncio
     nest_asyncio.apply()
 
     import pyshark
 
-    capture = pyshark.FileCapture("./capture_wireshark/usbcap1.pcapng",display_filter="usb.device_address == 1")
+    @dataclass
+    class UsbCommand:
+        direction: str          
+        endpoint: int           
+        command_byte: int       
+        payload: bytes         
+        raw_hex: str            
+        packet_num: int
+        timestamp: float
 
-    capture.load_packets()
+    @dataclass
+    class UsbTransaction:
+        request: UsbCommand
+        response: Optional[UsbCommand] = None
+        urb_id: Optional[str] = None
+    
+        @property
+        def is_complete(self) -> bool:
+            return self.response is not None
+    
+        @property
+        def duration_ms(self) -> Optional[float]:
+            if self.response:
+                return (self.response.timestamp - self.request.timestamp) * 1000
+            return None
 
-    print(capture)
+    return List, Tuple, UsbCommand, UsbTransaction, pyshark
+
+
+@app.cell
+def _(Tuple):
+    def parse_hex_data(hex_str: str) -> Tuple[int, bytes]:
+        """Parse '40:ff:04' -> (0x40, b'\xff\x04')"""
+        if not hex_str:
+            return (0, b'')
+    
+        # Remove colons if present, or use as-is
+        clean = hex_str.replace(':', '')
+        try:
+            data = bytes.fromhex(clean)
+            if len(data) == 0:
+                return (0, b'')
+            return (data[0], data[1:] if len(data) > 1 else b'')
+        except ValueError:
+            return (0, b'')
+
+
+    def extract_endpoint(usb_layer) -> Tuple[int, str]:
+        """Extract endpoint number and direction from USB layer"""
+        try:
+            # Try to get from endpoint field (e.g., '0x01')
+            ep_str = getattr(usb_layer, 'endpoint_number', '0')
+            ep = int(ep_str, 16) if isinstance(ep_str, str) else int(ep_str)
+        
+            # Direction from endpoint attribute or src/dst
+            direction = getattr(usb_layer, 'endpoint_direction', None)
+            if not direction:
+                src = getattr(usb_layer, 'src', 'unknown')
+                direction = 'OUT' if src == 'host' else 'IN'
+            
+            return (ep, direction)
+        except:
+            return (0, 'UNKNOWN')
+
+    return extract_endpoint, parse_hex_data
+
+
+@app.cell
+def _(
+    Dict,
+    List,
+    UsbCommand,
+    UsbTransaction,
+    extract_endpoint,
+    parse_hex_data,
+    pyshark,
+):
+    def parse_usb_transactions(pcap_file: str, 
+                              device_addr: int = 3,
+                              bus_id: int = 1) -> List[UsbTransaction]:
+        """
+        Extract paired USB transactions (SUBMIT/COMPLETE) from capture.
+        Returns list of UsbTransaction objects.
+        """
+        capture = pyshark.FileCapture(
+            pcap_file,
+            display_filter=f"usb.bus_id == {bus_id} && usb.device_address == {device_addr}"
+        )
+    
+        # store pending SUBMITs by URB ID
+        pending_requests: Dict[str, UsbCommand] = {}
+        transactions: List[UsbTransaction] = []
+    
+        for packet in capture:
+            try:
+                if not hasattr(packet, 'usb'):
+                    continue
+                
+                usb = packet.usb
+            
+                urb_id = getattr(usb, 'urb_id', None)
+                urb_type = getattr(usb, 'urb_type', 'UNKNOWN')  # SUBMIT or COMPLETE
+            
+                # Get data payload
+                data_str = None
+                for attr in ['leftover_capture_data', 'capdata', 'usb_capdata']:
+                    if hasattr(usb, attr):
+                        data_str = getattr(usb, attr)
+                        break
+            
+                if not data_str:
+                    continue
+            
+                # Parse metadata
+                endpoint, direction = extract_endpoint(usb)
+                cmd_byte, payload = parse_hex_data(data_str)
+                pkt_num = int(packet.number)
+                timestamp = float(packet.frame_info.time_relative)
+            
+                command = UsbCommand(
+                    endpoint=endpoint,
+                    direction=direction,
+                    command_byte=cmd_byte,
+                    payload=payload,
+                    raw_hex=data_str.replace(':', ''),
+                    packet_num=pkt_num,
+                    timestamp=timestamp,
+                    urb_type=urb_type
+                )
+            
+                # Pair SUBMIT with COMPLETE using URB ID
+                if urb_type == 'SUBMIT' and direction == 'OUT':
+                    if urb_id:
+                        pending_requests[urb_id] = command
+                    else:
+                        # Fallback: use packet number + timestamp proximity
+                        transactions.append(UsbTransaction(request=command))
+                    
+                elif urb_type == 'COMPLETE' and direction == 'IN':
+                    if urb_id and urb_id in pending_requests:
+                        req = pending_requests.pop(urb_id)
+                        transactions.append(UsbTransaction(
+                            request=req,
+                            response=command,
+                            urb_id=urb_id
+                        ))
+                    else:
+                        # Orphan response
+                        transactions.append(UsbTransaction(
+                            request=command, 
+                            response=command
+                        ))
+                    
+            except Exception as e:
+                continue
+    
+        capture.close()
+    
+        # Handle unmatched SUBMITs (no response captured)
+        for urb_id, cmd in pending_requests.items():
+            transactions.append(UsbTransaction(request=cmd, urb_id=urb_id))
+    
+        return transactions
+
+    return (parse_usb_transactions,)
+
+
+@app.cell
+def _(parse_usb_transactions):
+    transactions = parse_usb_transactions("./capture_wireshark/usbcap2.pcapng",device_addr=3,bus_id=1)
+    
+    # Print formatted output
+    for i, txn in enumerate(transactions):
+        print(f"\n=== Transaction {i+1} ===")
+        req = txn.request
+        
+        print(f"Request (Pkt {req.packet_num}, EP{req.endpoint} {req.direction}):")
+        print(f"  CMD: 0x{req.command_byte:02x}")
+        print(f"  Payload: {req.payload.hex() if req.payload else 'empty'}")
+        print(f"  Raw: {req.raw_hex}")
+        
+        if txn.response:
+            resp = txn.response
+            print(f"Response (Pkt {resp.packet_num}, took {txn.duration_ms:.2f}ms):")
+            print(f"  CMD: 0x{resp.command_byte:02x}")
+            print(f"  Payload: {resp.payload.hex() if resp.payload else 'empty'}")
+        else:
+            print("Response: [No response captured]")
+
     return
 
 
