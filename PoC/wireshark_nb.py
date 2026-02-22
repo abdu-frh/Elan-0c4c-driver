@@ -521,7 +521,8 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    `Filters:` usb.bus_id == 1 && usb.device_address == 3 && usb.data_flag == 0
+    `Filters:` usb.bus_id == 1 && usb.device_address == 3 && usb.data_flag == 0 <br>
+    `for windows` usb.bus_id == 1 && usb.device_address == 2
     """)
     return
 
