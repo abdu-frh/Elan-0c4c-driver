@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.19.11"
+__generated_with = "0.20.1"
 app = marimo.App(width="medium")
 
 
@@ -175,6 +175,7 @@ def _(mo):
 @app.cell
 def _(find_device, usb):
     from dataclasses import dataclass
+    import platform
     import time
 
     TIMEOUT_MS = 5000
@@ -202,13 +203,28 @@ def _(find_device, usb):
                 f"EP_IN=0x{self.EP_IN:02x}, "
                 f"EP_OUT=0x{self.EP_OUT:02x})"
             )
-
+    """""
     def init_device():
         dev = find_device()
         if dev.is_kernel_driver_active(Interface):
             dev.detach_kernel_driver(Interface)
         dev.set_configuration()
         usb.util.claim_interface(dev, Interface)
+        return dev
+    """""
+
+    def init_device():
+        dev = find_device()
+        if dev is None:
+            raise ValueError("Device not found")
+
+        if platform.system() == "Linux":
+            if dev.is_kernel_driver_active(Interface):
+                dev.detach_kernel_driver(Interface)
+
+        dev.set_configuration()
+        usb.util.claim_interface(dev, Interface)
+
         return dev
 
     return Interface, TIMEOUT_MS, USBCommand, init_device, time
@@ -667,6 +683,32 @@ def _(USBCommand):
             usb_cmd = guess_usb_command(cmd_info, name=f"cmd_{i}")
             if usb_cmd:
                 print(f"  → {usb_cmd}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Apperantly my cmd sending code with pyusb doesnt work in windows
+
+    To make it work i had to install, windrive(a generic driver for usb devices) using zadig. <br>
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Problem
+    Trying to capture traffic with wireshark is useless in our case <br>
+    Since our Elan fingerprint sencor is  WIndows Hello certified, for that it uses the WBF (Windows Biometric Framework) driver which runs on kernel mode and i cant capture with wireshark + communcation happens over biometric class stack, which is encrypted.
+
+    ## New Strategie
+
+    i found the driver via, device manager on windows, which straight up tells me where every important file is for our use case.
+
+    Try analyasse with gihdra the .sys files, since those are the kernel level driver files and have good infomation, since this is the part that does the communication with the Fingerprint sensor via usb.
+    """)
     return
 
 

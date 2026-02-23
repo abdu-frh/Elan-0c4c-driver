@@ -1,7 +1,7 @@
 {
   "version": "1",
   "metadata": {
-    "marimo_version": "0.19.11"
+    "marimo_version": "0.20.1"
   },
   "cells": [
     {
@@ -149,7 +149,7 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 003 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 ELAN\n iProduct               :    0x2 ELAN:ARM-M4\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
+          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 001 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 Error Accessing String\n iProduct               :    0x2 Error Accessing String\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
           "mimetype": "text/plain"
         }
       ]
@@ -182,7 +182,7 @@
     },
     {
       "id": "nWHF",
-      "code_hash": "17af6f88b6a14249fcc27197aeaa8b0e",
+      "code_hash": "a2e77659d1586d626b7dc0794b55e514",
       "outputs": [
         {
           "type": "data",
@@ -269,18 +269,18 @@
       "code_hash": "4d1b477b1b810a34288be41bf0e82d50",
       "outputs": [
         {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
+          "type": "error",
+          "ename": "exception",
+          "evalue": "[Errno 13] Access denied (insufficient permissions)",
+          "traceback": []
         }
       ],
       "console": [
         {
           "type": "stream",
-          "name": "stdout",
-          "text": "Sending enrolled number command...\nWaiting for device processing...\nEnrolled fingers 0.\nDevice released.\n",
-          "mimetype": "text/plain"
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\marimo\\_runtime\\executor.py&quot;</span>, line <span class=\"m\">138</span>, in <span class=\"n\">execute_cell</span>\n<span class=\"w\">    </span><span class=\"n\">exec</span><span class=\"p\">(</span><span class=\"n\">cell</span><span class=\"o\">.</span><span class=\"n\">body</span><span class=\"p\">,</span> <span class=\"n\">glbls</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\AppData\\Local\\Temp\\marimo_5464\\__marimo__cell_DnEU_.py&quot;</span>, line <span class=\"m\">136</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">get_enrolled_number</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\AppData\\Local\\Temp\\marimo_5464\\__marimo__cell_DnEU_.py&quot;</span>, line <span class=\"m\">45</span>, in <span class=\"n\">get_enrolled_number</span>\n<span class=\"w\">    </span><span class=\"n\">device</span> <span class=\"o\">=</span> <span class=\"n\">init_device</span><span class=\"p\">()</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\AppData\\Local\\Temp\\marimo_5464\\__marimo__cell_nWHF_.py&quot;</span>, line <span class=\"m\">49</span>, in <span class=\"n\">init_device</span>\n<span class=\"w\">    </span><span class=\"n\">dev</span><span class=\"o\">.</span><span class=\"n\">set_configuration</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">929</span>, in <span class=\"n\">set_configuration</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_ctx</span><span class=\"o\">.</span><span class=\"n\">managed_set_configuration</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">,</span> <span class=\"n\">configuration</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">113</span>, in <span class=\"n\">wrapper</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">,</span> <span class=\"o\">*</span><span class=\"n\">args</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwargs</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">159</span>, in <span class=\"n\">managed_set_configuration</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">managed_open</span><span class=\"p\">()</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~~~~^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">113</span>, in <span class=\"n\">wrapper</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">f</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"p\">,</span> <span class=\"o\">*</span><span class=\"n\">args</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwargs</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\core.py&quot;</span>, line <span class=\"m\">132</span>, in <span class=\"n\">managed_open</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">handle</span> <span class=\"o\">=</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">backend</span><span class=\"o\">.</span><span class=\"n\">open_device</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">dev</span><span class=\"p\">)</span>\n<span class=\"w\">                  </span><span class=\"pm\">~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">808</span>, in <span class=\"n\">open_device</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">_DeviceHandle</span><span class=\"p\">(</span><span class=\"n\">dev</span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">656</span>, in <span class=\"n\">__init__</span>\n<span class=\"w\">    </span><span class=\"n\">_check</span><span class=\"p\">(</span><span class=\"n\">_lib</span><span class=\"o\">.</span><span class=\"n\">libusb_open</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">devid</span><span class=\"p\">,</span> <span class=\"n\">byref</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">handle</span><span class=\"p\">)))</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\Pablo\\miniconda3\\Lib\\site-packages\\usb\\backend\\libusb1.py&quot;</span>, line <span class=\"m\">604</span>, in <span class=\"n\">_check</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">USBError</span><span class=\"p\">(</span><span class=\"n\">_strerror</span><span class=\"p\">(</span><span class=\"n\">ret</span><span class=\"p\">),</span> <span class=\"n\">ret</span><span class=\"p\">,</span> <span class=\"n\">_libusb_errno</span><span class=\"p\">[</span><span class=\"n\">ret</span><span class=\"p\">])</span>\n<span class=\"gr\">usb.core.USBError</span>: <span class=\"n\">[Errno 13] Access denied (insufficient permissions)</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
         }
       ]
     },
@@ -312,12 +312,12 @@
     },
     {
       "id": "Pvdt",
-      "code_hash": "d0103462c87295ce170cd919d6657ee0",
+      "code_hash": "5d2b441f3e38e9f59a7e8baa4482f2cc",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><code>Filters:</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 3 &amp;&amp; usb.data_flag == 0</span></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><code>Filters:</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 3 &amp;&amp; usb.data_flag == 0 <br>\n<code>for windows</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 2</span></span>"
           }
         }
       ],
@@ -350,24 +350,36 @@
       "console": []
     },
     {
-      "id": "kTQu",
+      "id": "nHfw",
       "code_hash": "a45c68ed4e3e931239d5de2665f668de",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "cMXm",
+      "code_hash": "b2ab67e6eab36ed289abb3f3e6046c65",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/plain": ""
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"apperantly-my-cmd-sending-code-with-pyusb-doesnt-work-in-windows\">Apperantly my cmd sending code with pyusb doesnt work in windows</h2>\n<span class=\"paragraph\">To make it work i had to install, windrive(a generic driver for usb devices) using zadig. <br> </span></span>"
           }
         }
       ],
-      "console": [
+      "console": []
+    },
+    {
+      "id": "WFTz",
+      "code_hash": "6f21be6c611263f01f6fb9823a0ca701",
+      "outputs": [
         {
-          "type": "stream",
-          "name": "stdout",
-          "text": "[CMD OUT] EP=0x01, data=b'@\\xff\\x04'\n[RSP IN]  EP=0x83, len=2, data=b'@\\x00'\n\n--- Command 0 ---\n  OUT EP: 0x01\n  OUT data: 40:ff:04\n  IN  EP: 0x83\n  IN  data: 40:00\n  resp_len: 2\n  \u2192 USBCommand(name='cmd_0', cmd=0xff, CMD_PORT=0x40, payload=0x04, resp_len=2, EP_IN=0x83, EP_OUT=0x01)\n",
-          "mimetype": "text/plain"
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"problem\">Problem</h2>\n<span class=\"paragraph\">Trying to capture traffic with wireshark is useless in our case <br>\nSince our Elan fingerprint sencor is  WIndows Hello certified, for that it uses the WBF (Windows Biometric Framework) driver which runs on kernel mode and i cant capture with wireshark + communcation happens over biometric class stack, which is encrypted.</span>\n<h2 id=\"new-strategie\">New Strategie</h2>\n<span class=\"paragraph\">i found the driver via, device manager on windows, which straight up tells me where every important file is for our use case.</span>\n<span class=\"paragraph\">Try analyasse with gihdra the .sys files, since those are the kernel level driver files and have good infomation, since this is the part that does the communication with the Fingerprint sensor via usb.</span></span>"
+          }
         }
-      ]
+      ],
+      "console": []
     }
   ]
 }
