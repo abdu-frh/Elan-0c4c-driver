@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.20.1"
+__generated_with = "0.19.11"
 app = marimo.App(width="medium")
 
 
@@ -227,7 +227,7 @@ def _(find_device, usb):
 
         return dev
 
-    return Interface, TIMEOUT_MS, USBCommand, init_device, time
+    return Interface, TIMEOUT_MS, USBCommand, time
 
 
 @app.cell
@@ -244,9 +244,13 @@ def _(Interface, TIMEOUT_MS, USBCommand, time, usb):
                 dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd]))
             else: 
                 dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd,cmd.payload]))
-            print("Waiting for device processing...")
-            time.sleep(0.05)
-            response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
+
+            if cmd.EP_IN == None:
+                return 0
+            else:
+                print("Waiting for device processing...")
+                time.sleep(0.05)
+                response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
             return response
         except usb.core.USBTimeoutError:
             print("ERROR: Timeout. Is the device ready?")
@@ -255,7 +259,7 @@ def _(Interface, TIMEOUT_MS, USBCommand, time, usb):
             print(f"ERROR: {e}")
             cleanup(dev=dev)
 
-    return cleanup, send_cmd
+    return
 
 
 @app.cell(hide_code=True)
@@ -327,22 +331,20 @@ def _(USBCommand):
     enrolled_number_cmd = USBCommand(name="enrolled number",cmd=0xff,CMD_PORT=0x40,payload=0x04,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     cal_status_cmd = USBCommand(name="cal status",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
 
+    """DOESNT RESPONSE LOL"""
+    elanmoc_remove_all_cmd = USBCommand(name="delete all",cmd=0xff,CMD_PORT=0x40,payload=0x99,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
     #testing
+    elanmoc_enroll = USBCommand(name="enroll finger",cmd=0xff,CMD_PORT=0x40,payload=0x01,resp_len=2,EP_IN=None,EP_OUT=0x01)
+    elanmoc_enroll_cancel = USBCommand(name="enroll finger",cmd=0xff,CMD_PORT=0x40,payload=0x02,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
+
 
     # needs wireshark
-    elanmoc_remove_all_cmd = USBCommand(name="delete all",cmd=0xff,CMD_PORT=0x40,payload=0x98,resp_len=2,EP_IN=0x84,EP_OUT=0x01)
     elanmoc_set_mod_cmd = USBCommand(name="set mode",cmd=0xff,CMD_PORT=0x40,payload=0x14,resp_len=2,EP_IN=0x83,EP_OUT=0x01,)
     elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
     elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
-    return (
-        cal_status_cmd,
-        elanmoc_get_userid_cmd,
-        elanmoc_remove_all_cmd,
-        elanmoc_set_mod_cmd,
-        elanmoc_verify_cmd,
-        enrolled_number_cmd,
-        fw_ver_cmd,
-    )
+    return
 
 
 @app.cell(hide_code=True)
@@ -357,19 +359,8 @@ def _(mo):
     return
 
 
-@app.cell
-def _(
-    cal_status_cmd,
-    cleanup,
-    elanmoc_get_userid_cmd,
-    elanmoc_remove_all_cmd,
-    elanmoc_set_mod_cmd,
-    elanmoc_verify_cmd,
-    enrolled_number_cmd,
-    fw_ver_cmd,
-    init_device,
-    send_cmd,
-):
+app._unparsable_cell(
+    r"""
     def get_fw_version():
         device = init_device()
         try:
@@ -473,15 +464,7 @@ def _(
             resp = send_cmd(dev=device,cmd=elanmoc_remove_all_cmd)
             if resp is None:
                 return
-            resplen = elanmoc_remove_all_cmd.resp_len
-            actual_len = len(resp)
-            if actual_len != resplen :
-                print(f"something went wrong, expected resp_len {resplen}, actutal: {actual_len}.")
-            status = resp[1]
-            if status == 3:
-                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrated and ready to go.")
-            else:
-                print(f"Sensor reported 0x0{resp[1]}, Sensor is calibrating.")
+            print("Delete_all cmd sended, Sensor doesnt resp do this cmd.")
         finally:
             if resp != None:
                 cleanup(dev=device)
@@ -505,14 +488,16 @@ def _(
 
     if __name__ == "__main__":
         #get_fw_version()
-        get_enrolled_number()
+        #get_enrolled_number()
         #et_status()
         #set_mode()
         #get_all_userids()
         #delete_all()
         #sleep(1000)
         #get_enrolled_number()
-    return
+    """,
+    name="_"
+)
 
 
 @app.cell(hide_code=True)
@@ -708,6 +693,89 @@ def _(mo):
     i found the driver via, device manager on windows, which straight up tells me where every important file is for our use case.
 
     Try analyasse with gihdra the .sys files, since those are the kernel level driver files and have good infomation, since this is the part that does the communication with the Fingerprint sensor via usb.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Windows Biometric Service
+      → SensorAdapter.dll / EngineAdapter.dll / StorageAdapter.dll
+        → WbfUsbDriver.dll (UMDF driver)
+          → WinUSB → USB hardware
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## WOW WOW WOW
+    ### some new cmd, from ghidra
+    Critical to reversse enginner FUN_180011090 (IS THE SEND USB CMD) <br>
+    `Timeout` 500 ms per cmd send
+    """)
+    return
+
+
+@app.cell
+def _():
+    """ 
+    ===DELETE ALL===
+    Bytes: FF 40 99
+    Length: 3
+    ===DELETE ALL===
+
+    ElanFP_Enroll_CD (FUN_18000d614)
+
+    Response[0]	Response[1]	    Meaning
+    0x40	    0x00	        Enroll success
+    0x40	    0xFE (-2)	    Area not enough (partial touch)
+    0x40	    0xFB (-5)	    Dirty sensor detected
+    0x40	    0xFC (-4)	    HLK test case
+    0x40	    0x41–0x44	    Finger position deviation (after rotation)
+
+    """
+
+
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    | Response[0] | Response[1] | Meaning |
+    |-------------|-------------|---------|
+    | `0x40` | `0x00` | **Enroll success** |
+    | `0x40` | `0xFE` (-2) | Area not enough (partial touch) |
+    | `0x40` | `0xFB` (-5) | Dirty sensor detected |
+    | `0x40` | `0xFC` (-4) | HLK test case |
+    | `0x40` | `0x41`–`0x44` | Finger position deviation (after rotation) |
+
+
+
+    | Response byte | WBF Reject Code | Meaning |
+    |---------------|-----------------|---------|
+    | `0x41` ('A') | `0x58` — `WINBIO_FP_TOO_HIGH` | Move finger down |
+    | `0x42` ('B') | `0x59` — `WINBIO_FP_TOO_LEFT` | Move finger right |
+    | `0x43` ('C') | `0x5A` — `WINBIO_FP_TOO_LOW` | Move finger up |
+    | `0x44` ('D') | `0x5B` — `WINBIO_FP_TOO_RIGHT` | Move finger left |
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    | Command | Length | Description |
+    |---------|--------|-------------|
+    | `40 [reg+40]` | 2 | Register read |
+    | `40 [reg+80] [val]` | 3 | Register write |
+    | `42 01 52 55 4E 49 41 50` | 8 | Switch to bootloader |
+    | `FF 40 01 [idx] [p1] [p2] [flag]` | 7 | **Enroll finger** |
+    | `FF 40 02` | 3 | **Cancel enroll** |
+    | `FF 40 99` | 3 | Delete all fingerprints |
     """)
     return
 
