@@ -227,39 +227,40 @@ def _(find_device, usb):
 
         return dev
 
-    return Interface, TIMEOUT_MS, USBCommand, time
+    return (USBCommand,)
 
 
-@app.cell
-def _(Interface, TIMEOUT_MS, USBCommand, time, usb):
-    def cleanup(dev: usb.core.Device):
-        usb.util.release_interface(dev, Interface)
-        usb.util.dispose_resources(dev)
-        print("Device released.")    
-
-    def send_cmd(dev: usb.core.Device, cmd: USBCommand):
-        try:
-            print(f"Sending {cmd.name} command...")
-            if cmd.payload == None:
-                dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd]))
-            else: 
-                dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd,cmd.payload]))
-
-            if cmd.EP_IN == None:
-                return 0
-            else:
-                print("Waiting for device processing...")
-                time.sleep(0.05)
-                response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
-            return response
-        except usb.core.USBTimeoutError:
-            print("ERROR: Timeout. Is the device ready?")
-            cleanup(dev=dev)
-        except Exception as e:
-            print(f"ERROR: {e}")
-            cleanup(dev=dev)
-
-    return
+app._unparsable_cell(
+    r"""
+        def cleanup(dev: usb.core.Device):
+            usb.util.release_interface(dev, Interface)
+            usb.util.dispose_resources(dev)
+            print("Device released.")    
+    
+        def send_cmd(dev: usb.core.Device, cmd: USBCommand):
+            try:
+                print(f"Sending {cmd.name} command...")
+                if cmd.payload == None:
+                    dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd]))
+                else: 
+                    dev.write(cmd.EP_OUT,bytes([cmd.CMD_PORT,cmd.cmd,cmd.payload]))
+    
+                if cmd.EP_IN == None:
+                    return 0
+                else:
+                    print("Waiting for device processing...")
+                    time.sleep(0.05)
+                    response = dev.read(cmd.EP_IN, cmd.resp_len, timeout=TIMEOUT_MS)
+                return response
+            except usb.core.USBTimeoutError:
+                print("ERROR: Timeout. Is the device ready?")
+                cleanup(dev=dev)
+            except Exception as e:
+                print(f"ERROR: {e}")
+                cleanup(dev=dev)
+    """,
+    name="_"
+)
 
 
 @app.cell(hide_code=True)
