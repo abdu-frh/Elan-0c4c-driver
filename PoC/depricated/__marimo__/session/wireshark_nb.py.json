@@ -1,0 +1,456 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.19.11"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "871204b8b4100e6d358c34c9b9bb6716",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"reverse-engineering-elan-wbf-fingerprint-sensor\">Reverse Engineering ELAN WBF Fingerprint Sensor</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "c05ec15ccb0f8910f3b7484ee877c260",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"using-wireshark-open-source-drivers-from-older-elan-fingerprints-and-the-libusb-libary\">Using Wireshark, open source drivers from older Elan fingerprints and the Libusb libary</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "e11bb5f8a4d94ae979ef440d96bd8db9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"current-knowledge\">Current Knowledge</h2>\n<span class=\"paragraph\">The devices is a complete arm mini computer with cpu, ram and storage.<br>\nIt manages the enrollment, verfication, storage and deletion of the fingerprints.</span>\n<span class=\"paragraph\">To communication, happens on the USB Protocol, from Computer to the Elan ARM M4.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "1cd86341b70498faecdab284d65000a0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"part-1-usb-protocoll-libusb-is-your-best-friend\">Part 1 USB-Protocoll: Libusb is your best friend \ud83e\udd17</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "cc6cfb4b4e3388b5a4a9b3555d6e4a39",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"usb-descriptor-hierarchy\">USB Descriptor Hierarchy</h2>\n<span class=\"paragraph\">USB devices are organized in a tree structure: Device \u2192 Configuration \u2192 Interface \u2192 Endpoint.</span>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Level</th>\n<th style=\"text-align: left;\">Contains</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>Device</strong></td>\n<td style=\"text-align: left;\">Vendor ID, Product ID, Configurations</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Configuration</strong></td>\n<td style=\"text-align: left;\">Power modes (usually just one)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Interface</strong></td>\n<td style=\"text-align: left;\">Unique functions per configuration</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Endpoint</strong></td>\n<td style=\"text-align: left;\">Data channels (IN/OUT)</td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\"><strong>Endpoints:</strong></span>\n<ul>\n<li><code>IN</code> \u2014 device to computer</li>\n<li><code>OUT</code> \u2014 computer to device</li>\n</ul>\n<span class=\"paragraph\"><strong>Transfer Types:</strong> Bulk (large) \u00b7 Interrupt (small) \u00b7 Isochronous (streaming)</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "962bba3094213abe878942eb2863eeb6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"how-to-figure-out-deviceid-and-vendorid\">How to figure out DeviceID and VendorID</h1>\n<span class=\"paragraph\"><strong>Command on Linux:</strong></span>\n<div class=\"language-bash codehilite\"><pre><span></span><code>lsusb\n</code></pre></div>\n<span class=\"paragraph\"><strong>Output:</strong></span>\n<div class=\"language-text codehilite\"><pre><span></span><code>Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 04f3:0c4c Elan Microelectronics Corp. ELAN:ARM-M4\nBus 001 Device 004: ID 346d:5678 ITE Intenso Rainbow Line\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 003 Device 002: ID 0bda:2852 Realtek Semiconductor Corp. Bluetooth Radio\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\n</code></pre></div>\n<span class=\"paragraph\"><strong>Format:</strong> <code>ID &lt;VendorID&gt;:&lt;DeviceID&gt;</code></span>\n<span class=\"paragraph\"><strong>Our fingerprint device:</strong> <code>ELAN:ARM-M4</code> with VendorID <code>04f3</code> and DeviceID <code>0c4c</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "b60f068c06af5c31a508d1f4adfaacb1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "b1410654f4afea7d84af8da3510a4b01",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"find-device-via-vendor-and-device-id\">Find device via Vendor and Device-ID</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "a8f5f79787180210cc3dc3d76808e0bf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"needs-to-be-run-as-administrator-or-root-in-unix\">needs to be run as administrator or root in unix\u2b07\ufe0f</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "857143e0a2f8acbf39467e44aebd5c6b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "DEVICE ID 04f3:0c4c on Bus 001 Address 022 =================\n bLength                :   0x12 (18 bytes)\n bDescriptorType        :    0x1 Device\n bcdUSB                 :  0x200 USB 2.0\n bDeviceClass           :    0x0 Specified at interface\n bDeviceSubClass        :    0x0\n bDeviceProtocol        :    0x0\n bMaxPacketSize0        :    0x8 (8 bytes)\n idVendor               : 0x04f3\n idProduct              : 0x0c4c\n bcdDevice              :  0x305 Device 3.05\n iManufacturer          :    0x1 ELAN\n iProduct               :    0x2 ELAN:ARM-M4\n iSerialNumber          :    0x0 \n bNumConfigurations     :    0x1\n  CONFIGURATION 1: 100 mA ==================================\n   bLength              :    0x9 (9 bytes)\n   bDescriptorType      :    0x2 Configuration\n   wTotalLength         :   0x53 (83 bytes)\n   bNumInterfaces       :    0x1\n   bConfigurationValue  :    0x1\n   iConfiguration       :    0x0 \n   bmAttributes         :   0xa0 Bus Powered, Remote Wakeup\n   bMaxPower            :   0x32 (100 mA)\n    INTERFACE 0: Vendor Specific ===========================\n     bLength            :    0x9 (9 bytes)\n     bDescriptorType    :    0x4 Interface\n     bInterfaceNumber   :    0x0\n     bAlternateSetting  :    0x0\n     bNumEndpoints      :    0x8\n     bInterfaceClass    :   0xff Vendor Specific\n     bInterfaceSubClass :    0x0\n     bInterfaceProtocol :    0x0\n     iInterface         :    0x0 \n      ENDPOINT 0x81: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x81 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x1: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x1 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x82: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x82 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x2: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x2 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x83: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x83 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x3: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x3 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x84: Bulk IN ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :   0x84 IN\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n      ENDPOINT 0x4: Bulk OUT ===============================\n       bLength          :    0x7 (7 bytes)\n       bDescriptorType  :    0x5 Endpoint\n       bEndpointAddress :    0x4 OUT\n       bmAttributes     :    0x2 Bulk\n       wMaxPacketSize   :   0x40 (64 bytes)\n       bInterval        :    0x1\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "d360194dcf44560de1f034e2257b2d7b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"specs-for-communication\">Specs for communication</h2>\n<span class=\"paragraph\"><strong>Endpoints:</strong> 4 total (IN/OUT pairs)\n<strong>Config:</strong> 1 | <strong>Interface:</strong> 1</span>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">EP</th>\n<th style=\"text-align: center;\">IN</th>\n<th style=\"text-align: center;\">OUT</th>\n<th>Type</th>\n<th style=\"text-align: right;\">Size</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">1</td>\n<td style=\"text-align: center;\">0x81</td>\n<td style=\"text-align: center;\">0x1</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2</td>\n<td style=\"text-align: center;\">0x82</td>\n<td style=\"text-align: center;\">0x2</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">3</td>\n<td style=\"text-align: center;\">0x83</td>\n<td style=\"text-align: center;\">0x3</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4</td>\n<td style=\"text-align: center;\">0x84</td>\n<td style=\"text-align: center;\">0x4</td>\n<td>BULK</td>\n<td style=\"text-align: right;\">64 B</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "206e77413ba462cd22d98f8d096c7c59",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"try-to-do-some-cmds-on-linux-lol\">Try to do some cmds, (on linux) lol\ud83d\ude3a</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "a2e77659d1586d626b7dc0794b55e514",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "dc57ede29f49c72632ee695cae96714f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "ce6a5ce219a2ea36c1cf9fa2f162793c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"some-cmd-infomation-from-older-driver\">Some cmd infomation from older driver</h2>\n<span class=\"paragraph\">From <code>elanmoc.c</code>:</span>\n<div class=\"language-c codehilite\"><pre><span></span><code><span class=\"k\">static</span><span class=\"w\"> </span><span class=\"kt\">void</span><span class=\"w\"> </span><span class=\"nf\">elanmoc_cmd_ver_cb</span><span class=\"p\">(</span><span class=\"n\">FpiDeviceElanmoc</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">self</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"kt\">uint8_t</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">buffer_in</span><span class=\"p\">,</span>\n<span class=\"w\">                               </span><span class=\"n\">gsize</span><span class=\"w\"> </span><span class=\"n\">length_in</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">GError</span><span class=\"w\"> </span><span class=\"o\">*</span><span class=\"n\">error</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"k\">if</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">error</span><span class=\"p\">)</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">    </span><span class=\"n\">fpi_ssm_mark_failed</span><span class=\"p\">(</span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">task_ssm</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">error</span><span class=\"p\">);</span>\n<span class=\"w\">    </span><span class=\"k\">return</span><span class=\"p\">;</span>\n<span class=\"w\">  </span><span class=\"p\">}</span>\n\n<span class=\"w\">  </span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">fw_ver</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"n\">buffer_in</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">]</span><span class=\"w\"> </span><span class=\"o\">&lt;&lt;</span><span class=\"w\"> </span><span class=\"mi\">8</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">buffer_in</span><span class=\"p\">[</span><span class=\"mi\">1</span><span class=\"p\">]);</span>\n<span class=\"w\">  </span><span class=\"n\">fp_info</span><span class=\"p\">(</span><span class=\"s\">&quot;elanmoc  FW Version %x &quot;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">fw_ver</span><span class=\"p\">);</span>\n<span class=\"w\">  </span><span class=\"n\">fpi_ssm_next_state</span><span class=\"p\">(</span><span class=\"n\">self</span><span class=\"o\">-&gt;</span><span class=\"n\">task_ssm</span><span class=\"p\">);</span>\n<span class=\"p\">}</span>\n</code></pre></div>\n<span class=\"paragraph\">From <code>elanmoc.h</code>:</span>\n<div class=\"language-c codehilite\"><pre><span></span><code><span class=\"k\">static</span><span class=\"w\"> </span><span class=\"k\">const</span><span class=\"w\"> </span><span class=\"k\">struct</span><span class=\"w\"> </span><span class=\"nc\">elanmoc_cmd</span><span class=\"w\"> </span><span class=\"n\">fw_ver_cmd</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">{</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">cmd_header</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"p\">{</span><span class=\"mh\">0x40</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"mh\">0x19</span><span class=\"p\">},</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">cmd_len</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"mi\">2</span><span class=\"p\">,</span>\n<span class=\"w\">  </span><span class=\"p\">.</span><span class=\"n\">resp_len</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"mi\">2</span><span class=\"p\">,</span>\n<span class=\"p\">};</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "0b9e6014489025d592a98c41fce0b63a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "99313eb78fdf749562aea51a0d934c7c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Constant</th>\n<th>Calculation</th>\n<th>Hex</th>\n<th>Decimal</th>\n<th>Meaning</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>ELAN_EP_CMD_OUT</code></td>\n<td><code>0x1 \\| 0x00</code></td>\n<td><code>0x01</code></td>\n<td><strong>1</strong></td>\n<td>Endpoint 1, <strong>OUT</strong> (Host \u2192 Device)</td>\n</tr>\n<tr>\n<td><code>ELAN_EP_CMD_IN</code></td>\n<td><code>0x3 \\| 0x80</code></td>\n<td><code>0x83</code></td>\n<td><strong>131</strong></td>\n<td>Endpoint 3, <strong>IN</strong> (Device \u2192 Host)</td>\n</tr>\n<tr>\n<td><code>ELAN_EP_MOC_CMD_IN</code></td>\n<td><code>0x4 \\| 0x80</code></td>\n<td><code>0x84</code></td>\n<td><strong>132</strong></td>\n<td>Endpoint 4, <strong>IN</strong></td>\n</tr>\n<tr>\n<td><code>ELAN_EP_IMG_IN</code></td>\n<td><code>0x2 \\| 0x80</code></td>\n<td><code>0x82</code></td>\n<td><strong>130</strong></td>\n<td>Endpoint 2, <strong>IN</strong></td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "17fda502c77bedaf18194470efc08a22",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "b0842fd67c9118957e95390b7e364d9c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"cal_status_cmd\">cal_status_cmd</h3>\n<span class=\"paragraph\">This command is used during DEV_WAIT_READY and is retried up to ELAN_MOC_CAL_RETRY (500) times. The driver keeps polling this command until the sensor reports it's calibrated and ready.</span>\n<span class=\"paragraph\">A value of 0x03 means calibration complete / sensor ready \u2014 so your sensor is good to go</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "ee93935a8c702038e418e64827decbf8",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "syntax",
+          "evalue": "line 134\n    #get_enrolled_number()\n                          ^\nIndentationError: expected an indented block after 'if' statement on line 126\n",
+          "traceback": []
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Sending delete all command...\nDelete_all cmd sended, Sensor doesnt resp do this cmd.\nDevice released.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "8812d207fbba692609d8ceaf32f8b00f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"wireshark\">Wireshark\ud83e\udd88</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "c9e3a7f683f7460c50a3981eeb5c6b02",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"commands-to-capture-usb-traffic-in-linux\">Commands to Capture USB Traffic in Linux</h2>\n<span class=\"paragraph\"><code>sudo modprobe usbmon</code> loads module thats enables us to capture usb traffic\n<code>sudo wiresharl</code> needed for</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "5d2b441f3e38e9f59a7e8baa4482f2cc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><code>Filters:</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 3 &amp;&amp; usb.data_flag == 0 <br>\n<code>for windows</code> usb.bus_id == 1 &amp;&amp; usb.device_address == 2</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "01708309c16710e22f174dc952367175",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Send cmd and watch traffic with wireshark <br> Section: Leftover Capture Data, is where you can find CMD_PORT:CMD:PAYLOAD <br> example get_enrolled_number: 40ff04</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "482cc3e73e111b1f016daaaff133b2d0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"read-the-recorded-traffic-from-fingerprint-and-parse-out-commands\">Read the recorded traffic from Fingerprint and parse out commands\ud83c\udf86</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "a45c68ed4e3e931239d5de2665f668de",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "1264c16e5d4fb531792e42167f44b029",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"apperantly-my-cmd-sending-code-with-pyusb-doesnt-work-in-windows\">Apperantly my cmd sending code with pyusb doesnt work in windows</h2>\n<span class=\"paragraph\">To make it work i had to install, windrive(a generic driver for usb devices) using zadig. <br></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "69176423e4835c811ae88ceebb0a8e70",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"problem\">Problem</h2>\n<span class=\"paragraph\">Trying to capture traffic with wireshark is useless in our case <br>\nSince our Elan fingerprint sencor is  WIndows Hello certified, for that it uses the WBF (Windows Biometric Framework) driver which runs on kernel mode and i cant capture with wireshark + communcation happens over biometric class stack, which is encrypted.</span>\n<h2 id=\"new-strategie\">New Strategie</h2>\n<span class=\"paragraph\">i found the driver via, device manager on windows, which straight up tells me where every important file is for our use case.</span>\n<span class=\"paragraph\">Try analyasse with gihdra the .sys files, since those are the kernel level driver files and have good infomation, since this is the part that does the communication with the Fingerprint sensor via usb.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zHhO",
+      "code_hash": "6384e06e9e6d74fad5eb6a636ba083ee",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Windows Biometric Service\n  \u2192 SensorAdapter.dll / EngineAdapter.dll / StorageAdapter.dll\n    \u2192 WbfUsbDriver.dll (UMDF driver)\n      \u2192 WinUSB \u2192 USB hardware</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "esqf",
+      "code_hash": "6e5dbb6472f82969cecabd9d1986628a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"wow-wow-wow\">WOW WOW WOW</h2>\n<h3 id=\"some-new-cmd-from-ghidra\">some new cmd, from ghidra</h3>\n<span class=\"paragraph\">Critical to reversse enginner FUN_180011090 (IS THE SEND USB CMD) <br>\n<code>Timeout</code> 500 ms per cmd send</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wKoL",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "vgXI",
+      "code_hash": "17d3885a98a02cf0ee66230c1e55b9a8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Response[0]</th>\n<th>Response[1]</th>\n<th>Meaning</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>0x40</code></td>\n<td><code>0x00</code></td>\n<td><strong>Enroll success</strong></td>\n</tr>\n<tr>\n<td><code>0x40</code></td>\n<td><code>0xFE</code> (-2)</td>\n<td>Area not enough (partial touch)</td>\n</tr>\n<tr>\n<td><code>0x40</code></td>\n<td><code>0xFB</code> (-5)</td>\n<td>Dirty sensor detected</td>\n</tr>\n<tr>\n<td><code>0x40</code></td>\n<td><code>0xFC</code> (-4)</td>\n<td>HLK test case</td>\n</tr>\n<tr>\n<td><code>0x40</code></td>\n<td><code>0x41</code>\u2013<code>0x44</code></td>\n<td>Finger position deviation (after rotation)</td>\n</tr>\n</tbody>\n</table>\n<table>\n<thead>\n<tr>\n<th>Response byte</th>\n<th>WBF Reject Code</th>\n<th>Meaning</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>0x41</code> ('A')</td>\n<td><code>0x58</code> \u2014 <code>WINBIO_FP_TOO_HIGH</code></td>\n<td>Move finger down</td>\n</tr>\n<tr>\n<td><code>0x42</code> ('B')</td>\n<td><code>0x59</code> \u2014 <code>WINBIO_FP_TOO_LEFT</code></td>\n<td>Move finger right</td>\n</tr>\n<tr>\n<td><code>0x43</code> ('C')</td>\n<td><code>0x5A</code> \u2014 <code>WINBIO_FP_TOO_LOW</code></td>\n<td>Move finger up</td>\n</tr>\n<tr>\n<td><code>0x44</code> ('D')</td>\n<td><code>0x5B</code> \u2014 <code>WINBIO_FP_TOO_RIGHT</code></td>\n<td>Move finger left</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qDbg",
+      "code_hash": "a5fd88dc8da0307cb17dd2a3fabb14fb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Command</th>\n<th>Length</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>40 [reg+40]</code></td>\n<td>2</td>\n<td>Register read</td>\n</tr>\n<tr>\n<td><code>40 [reg+80] [val]</code></td>\n<td>3</td>\n<td>Register write</td>\n</tr>\n<tr>\n<td><code>42 01 52 55 4E 49 41 50</code></td>\n<td>8</td>\n<td>Switch to bootloader</td>\n</tr>\n<tr>\n<td><code>FF 40 01 [idx] [p1] [p2] [flag]</code></td>\n<td>7</td>\n<td><strong>Enroll finger</strong></td>\n</tr>\n<tr>\n<td><code>FF 40 02</code></td>\n<td>3</td>\n<td><strong>Cancel enroll</strong></td>\n</tr>\n<tr>\n<td><code>FF 40 99</code></td>\n<td>3</td>\n<td>Delete all fingerprints</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NovA",
+      "code_hash": "adade50cedcca9c75a535300d233a5f0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Command</th>\n<th>Tx Len</th>\n<th>Rx Len</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>00 09</code></td>\n<td>2</td>\n<td>0</td>\n<td>Capture start</td>\n</tr>\n<tr>\n<td><code>02 0A</code></td>\n<td>2</td>\n<td>w\u00d7h</td>\n<td>Read fingerprint image</td>\n</tr>\n<tr>\n<td><code>40 [reg+0x40]</code></td>\n<td>2</td>\n<td>1</td>\n<td>Register read</td>\n</tr>\n<tr>\n<td><code>40 [reg+0x80] [val]</code></td>\n<td>3</td>\n<td>0</td>\n<td>Register write</td>\n</tr>\n<tr>\n<td><code>40 13</code></td>\n<td>2</td>\n<td>1</td>\n<td>Read sensor SPI status</td>\n</tr>\n<tr>\n<td><code>40 27 WDTRST</code></td>\n<td>8</td>\n<td>0</td>\n<td>Watchdog timer reset</td>\n</tr>\n<tr>\n<td><code>42 01 RUNIAP</code></td>\n<td>8</td>\n<td>0</td>\n<td>Switch to bootloader</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
