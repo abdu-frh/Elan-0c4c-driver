@@ -335,13 +335,55 @@ def _(USBCommand):
     elanmoc_remove_all_cmd = USBCommand(name="delete all",cmd=0xff,CMD_PORT=0x40,payload=0x99,resp_len=2,EP_IN=None,EP_OUT=0x01)
 
     #testing
+    """
+    Mode (guess)	Meaning
+    0	Idle / standby
+    1	Capture / sensing
+    2	Low power
+    3	MOC verify mode
+    """
+    elanmoc_set_mod_cmd = USBCommand(name="set mode",cmd=0xff,CMD_PORT=0x40,payload=0x14,resp_len=2,EP_IN=0x83,EP_OUT=0x01,)
     elanmoc_enroll = USBCommand(name="enroll finger",cmd=0xff,CMD_PORT=0x40,payload=0x01,resp_len=2,EP_IN=None,EP_OUT=0x01)
-    elanmoc_enroll_cancel = USBCommand(name="enroll finger",cmd=0xff,CMD_PORT=0x40,payload=0x02,resp_len=2,EP_IN=None,EP_OUT=0x01)
+    elanmoc_enroll_cancel = USBCommand(name="cancel enroll finger",cmd=0xff,CMD_PORT=0x40,payload=0x02,resp_len=2,EP_IN=None,EP_OUT=0x01)
 
+    """[32 bytes ECC data] param"""
+    elanmoc_ECC_enroll_commit = USBCommand(name="ECC enroll commit",cmd=0xff,CMD_PORT=0x40,payload=0x0A,resp_len=2,EP_IN=None,EP_OUT=0x01)
+    FpEccSignVerify =  USBCommand(name="ECC Sign Verfiy",cmd=0xff,CMD_PORT=0x40,payload=0x06,resp_len=1202,EP_IN=None,EP_OUT=0x01)
+    FpGetFWAP_PKey = USBCommand(name="get public key",cmd=0xff,CMD_PORT=0x40,payload=0x0D,resp_len=66,EP_IN=None,EP_OUT=0x01)
+    FpGetFWAuthorizedInfo = USBCommand(name="get Authorized info",cmd=0xff,CMD_PORT=0x40,payload=0x0C,resp_len=66,EP_IN=None,EP_OUT=0x01)
+    FpReceiveEnrollNonce = USBCommand(name="receive enroll nonce",cmd=0xff,CMD_PORT=0x40,payload=0x09,resp_len=34,EP_IN=None,EP_OUT=0x01)
+    """response 0xFF"""
+    OnDeviceGetSID = USBCommand(name="get secure id",cmd=0xff,CMD_PORT=0x40,payload=0x12,resp_len=34,EP_IN=None,EP_OUT=0x01)
+    OnDeviceCommitEnrollID = USBCommand(name="commit secure id",cmd=0xff,CMD_PORT=0x40,payload=0x11,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
+
+    """0x00 is ok, rest check Errorcodes"""
+    ElanFP_Verfication_CD = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x03,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
+
+    """0x00 success, 0xFE finger not found, 0xFF Error"""
+    ElanFP_RemoveFinger_SubSID = USBCommand(name="remove finger sid",cmd=0xff,CMD_PORT=0x40,payload=0x13,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
+    """remove finger by id"""
+    ElanFP_RemoveFinger_CD = USBCommand(name="remove finger by id",cmd=0xff,CMD_PORT=0x40,payload=0x05,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
+    """0x03 ready, 0x01 not ready"""
+    FpDeviceInitialize_POA = USBCommand(name="device init",cmd=0xff,CMD_PORT=0x40,payload=0x00,resp_len=2,EP_IN=None,EP_OUT=0x01)
+
+
+    SendWDTCMD =  USBCommand(name="reset watchdog timer",cmd=0x40,CMD_PORT=0x40,payload=0x27,resp_len=2,EP_IN=None,EP_OUT=0x01) 
+
+    ReadSensorStatus = USBCommand(name="read sensor status",cmd=0x40,CMD_PORT=0x40,payload=0x13,resp_len=2,EP_IN=None,EP_OUT=0x01) 
+
+    GetSensorTrace = USBCommand(name="get sensor trace",cmd=0x00,CMD_PORT=0x40,payload=0x0C,resp_len=4,EP_IN=None,EP_OUT=0x01)
+
+    CheckDuplicate =  USBCommand(name="check for duplicate",cmd=0xFF,CMD_PORT=0x40,payload=0x10,resp_len=3,EP_IN=None,EP_OUT=0x01)
+
+    CaptureStart = USBCommand(name="start capture",cmd=0x00,CMD_PORT=0x40,payload=0x09,resp_len=2,EP_IN=None,EP_OUT=0x01) 
+    CaptureBaseImage = USBCommand(name="capture base img",cmd=0x01,CMD_PORT=0x0A,payload=0x10,resp_len=128000,EP_IN=None,EP_OUT=0x01)
+    GetImgFromFW = USBCommand(name="read fingerprint",cmd=0x02,CMD_PORT=0x40,payload=0x0A,resp_len=2,EP_IN=None,EP_OUT=0x01)
 
 
     # needs wireshark
-    elanmoc_set_mod_cmd = USBCommand(name="set mode",cmd=0xff,CMD_PORT=0x40,payload=0x14,resp_len=2,EP_IN=0x83,EP_OUT=0x01,)
     elanmoc_get_userid_cmd = USBCommand(name="get all user",cmd=0x21,CMD_PORT=0x43,payload=0x00,resp_len=97,EP_IN=0x84,EP_OUT=0x01)
     elanmoc_verify_cmd = USBCommand(name="verify",cmd=0xff,CMD_PORT=0x40,payload=0x73,resp_len=2,EP_IN=0x83,EP_OUT=0x01)
     return
@@ -776,6 +818,22 @@ def _(mo):
     | `FF 40 01 [idx] [p1] [p2] [flag]` | 7 | **Enroll finger** |
     | `FF 40 02` | 3 | **Cancel enroll** |
     | `FF 40 99` | 3 | Delete all fingerprints |
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    | Command | Tx Len | Rx Len | Description |
+    |---------|--------|--------|-------------|
+    | `00 09` | 2 | 0 | Capture start |
+    | `02 0A` | 2 | w×h | Read fingerprint image |
+    | `40 [reg+0x40]` | 2 | 1 | Register read |
+    | `40 [reg+0x80] [val]` | 3 | 0 | Register write |
+    | `40 13` | 2 | 1 | Read sensor SPI status |
+    | `40 27 WDTRST` | 8 | 0 | Watchdog timer reset |
+    | `42 01 RUNIAP` | 8 | 0 | Switch to bootloader |
     """)
     return
 

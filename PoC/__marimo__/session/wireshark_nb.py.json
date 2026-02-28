@@ -438,6 +438,19 @@
         }
       ],
       "console": []
+    },
+    {
+      "id": "NovA",
+      "code_hash": "adade50cedcca9c75a535300d233a5f0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><table>\n<thead>\n<tr>\n<th>Command</th>\n<th>Tx Len</th>\n<th>Rx Len</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>00 09</code></td>\n<td>2</td>\n<td>0</td>\n<td>Capture start</td>\n</tr>\n<tr>\n<td><code>02 0A</code></td>\n<td>2</td>\n<td>w\u00d7h</td>\n<td>Read fingerprint image</td>\n</tr>\n<tr>\n<td><code>40 [reg+0x40]</code></td>\n<td>2</td>\n<td>1</td>\n<td>Register read</td>\n</tr>\n<tr>\n<td><code>40 [reg+0x80] [val]</code></td>\n<td>3</td>\n<td>0</td>\n<td>Register write</td>\n</tr>\n<tr>\n<td><code>40 13</code></td>\n<td>2</td>\n<td>1</td>\n<td>Read sensor SPI status</td>\n</tr>\n<tr>\n<td><code>40 27 WDTRST</code></td>\n<td>8</td>\n<td>0</td>\n<td>Watchdog timer reset</td>\n</tr>\n<tr>\n<td><code>42 01 RUNIAP</code></td>\n<td>8</td>\n<td>0</td>\n<td>Switch to bootloader</td>\n</tr>\n</tbody>\n</table></span>"
+          }
+        }
+      ],
+      "console": []
     }
   ]
 }
