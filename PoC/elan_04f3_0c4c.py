@@ -844,6 +844,9 @@ Examples:
 
 def _hexdump(data: bytes):
     """Simple hex dump for CLI output."""
+    if data is None:
+        print("No Hexdump data.")
+        return
     for i in range(0, len(data), 16):
         chunk = data[i : i + 16]
         hex_part = " ".join(f"{b:02x}" for b in chunk)
