@@ -187,18 +187,29 @@ class ElanDevice:
         name: str = "",
     ) -> bytes:
         tx = bytes([0x40, 0xFF, sub_cmd]) + payload
-        resp = self._cmd(
-            tx,
-            rx_len,
-            timeout=timeout,
-            ep_in=ep_in,
-            name=name or f"MOC 0x{sub_cmd:02X}",
-        )
-        if resp is None:
-            return b""
-        if len(resp) < 1 or resp[0] != 0x40:
-            print(f"  [{name}] Unexpected response header: {resp.hex()}")
-        return resp
+        label = name or f"MOC 0x{sub_cmd:02X}"
+        try:
+            print(f"    [{label}] TX ({len(tx)}B): {tx.hex()}")
+            self._write(tx, timeout=timeout)
+            if rx_len == 0:
+                return b""
+            time.sleep(0.05)
+            # Read at least max_packet_size to avoid libusb overflow,
+            # but don't force the response to be exactly rx_len —
+            # sensor may return fewer bytes on error.
+            buf_size = max(rx_len, self._max_packet_size)
+            data = bytes(self.dev.read(ep_in, buf_size, timeout=timeout))
+            # Return actual data received, NOT sliced to rx_len,
+            # so callers can detect short (error) responses.
+            actual = data[: max(len(data), rx_len)]
+            print(f"    [{label}] RX ({len(data)}B): {data[:rx_len].hex()}")
+            return data
+        except usb.core.USBTimeoutError:
+            print(f"    [{label}] TIMEOUT")
+            raise
+        except usb.core.USBError as e:
+            print(f"    [{label}] USB error: {e}")
+            raise
 
     @staticmethod
     def _moc_result(resp: bytes) -> int:
@@ -227,10 +238,16 @@ class ElanDevice:
     def abort(self):
         """MOC 0x02 → cancel any in-progress operation."""
         try:
-            self._moc_cmd(0x02, rx_len=2, ep_in=EP_CMD_IN, name="Abort")
+            tx = bytes([0x40, 0xFF, 0x02])
+            self._write(tx)
+            # Best-effort read — sensor may not respond
+            try:
+                self._read(2, ep_in=EP_CMD_IN, timeout=1000)
+            except usb.core.USBTimeoutError:
+                pass  # Expected — abort often has no response
             print("  Operation aborted.")
         except usb.core.USBError:
-            pass  # best-effort
+            pass
 
     # ── Bridge / low-level commands ────────────────────────────
 
@@ -360,10 +377,10 @@ class ElanDevice:
         print(f"  Enrolled fingers: {count}")
         return count
 
-    def get_finger_info(self, finger_id: int) -> bytes:
+    def get_finger_info(self, finger_id: int) -> Optional[bytes]:
         """
-        MOC 0x12 [id] → 70 bytes: 40 <status> [68B data].
-        If sensor returns 0xFF error, verify a finger to reset it.
+        MOC 0x12 [id] → 70 bytes on success, 2 bytes on error.
+        Returns full 70-byte response, or None if slot is empty/error.
         """
         resp = self._moc_cmd(
             0x12,
@@ -371,8 +388,23 @@ class ElanDevice:
             rx_len=70,
             name=f"Finger Info {finger_id}",
         )
-        if len(resp) >= 2 and resp[1] == 0xFF:
-            print(f"  Sensor error on finger_info — verify a finger to reset state")
+
+        # Sensor may return only 2 bytes for empty/error slots
+        if len(resp) < 3:
+            result = self._moc_result(resp)
+            if result == 0xFF:
+                print(f"  Finger {finger_id}: not enrolled (empty slot)")
+            elif result == MocResponse.NOT_READY:
+                print(f"  Finger {finger_id}: sensor not ready")
+            else:
+                print(f"  Finger {finger_id}: error 0x{result:02X}")
+            return None
+
+        if not self._moc_ok(resp):
+            result = self._moc_result(resp)
+            print(f"  Finger {finger_id}: error 0x{result:02X}")
+            return None
+
         return resp
 
     def get_all_finger_info(self) -> list[bytes]:
@@ -411,16 +443,13 @@ class ElanDevice:
             return False
 
     def remove_all_fingers(self):
-        """
-        Delete all enrolled fingers one by one (using SID).
-        Mirrors the reference delete_all approach.
-        """
+        """Delete all enrolled fingers one by one (using SID)."""
         for fid in range(10):
             resp = self.get_finger_info(fid)
-            if len(resp) >= 70 and resp[-1] == 0xFF:
+            if resp is None:
                 print(f"  Finger {fid} not enrolled, skipping.")
                 continue
-            # Construct SID from finger_info response
+            # SID is bytes 2..69 of the 70-byte response
             sid = (struct.pack("B", 0xF0 | (fid + 5)) + resp[2:]).ljust(69, b"\x00")
             self.remove_finger_by_sid(sid)
 
@@ -813,6 +842,15 @@ Examples:
     return parser
 
 
+def _hexdump(data: bytes):
+    """Simple hex dump for CLI output."""
+    for i in range(0, len(data), 16):
+        chunk = data[i : i + 16]
+        hex_part = " ".join(f"{b:02x}" for b in chunk)
+        ascii_part = "".join(chr(b) if 32 <= b < 127 else "." for b in chunk)
+        print(f"  {i:04x}: {hex_part:<48s} {ascii_part}")
+
+
 def interactive_loop(parser: argparse.ArgumentParser):
     print("Interactive mode. Type 'help' to see commands, 'quit' to exit.")
     while True:
@@ -888,10 +926,14 @@ def run_command(args):
 
             elif args.command == "finger_info_all":
                 sensor.initialize()
-                for fid in range(10):
-                    resp = sensor.get_finger_info(fid)
-                    print(f"Finger info {fid}:")
-                    _hexdump(resp)
+                results = sensor.get_all_finger_info()
+                for fid, resp in enumerate(results):
+                    print(f"Finger {fid}:")
+                    if resp is None:
+                        print("  (empty)")
+                    else:
+                        _hexdump(resp)
+                    print()
 
             elif args.command == "enroll":
                 sensor.initialize()
