@@ -380,32 +380,35 @@ class ElanDevice:
     def get_finger_info(self, finger_id: int) -> Optional[bytes]:
         """
         MOC 0x12 [id] → 70 bytes on success, 2 bytes on error.
-        Returns full 70-byte response, or None if slot is empty/error.
+        If sensor returns 0xFF, it needs a verify first.
         """
-        resp = self._moc_cmd(
-            0x12,
-            payload=bytes([finger_id & 0xFF]),
-            rx_len=70,
-            name=f"Finger Info {finger_id}",
-        )
+        while True:
+            resp = self._moc_cmd(
+                0x12,
+                payload=bytes([finger_id & 0xFF]),
+                rx_len=70,
+                name=f"Finger Info {finger_id}",
+            )
 
-        # Sensor may return only 2 bytes for empty/error slots
-        if len(resp) < 3:
-            result = self._moc_result(resp)
-            if result == 0xFF:
-                print(f"  Finger {finger_id}: not enrolled (empty slot)")
-            elif result == MocResponse.NOT_READY:
-                print(f"  Finger {finger_id}: sensor not ready")
-            else:
+            if len(resp) < 3:
+                result = self._moc_result(resp)
+                if result == 0xFF:
+                    print(f"  Sensor refused finger_info — verify a finger to unlock")
+                    self.verify_finger()
+                    continue  # retry after verify
+                elif result == MocResponse.NOT_READY:
+                    print(f"  Finger {finger_id}: sensor not ready")
+                    return None
+                else:
+                    print(f"  Finger {finger_id}: error 0x{result:02X}")
+                    return None
+
+            if not self._moc_ok(resp):
+                result = self._moc_result(resp)
                 print(f"  Finger {finger_id}: error 0x{result:02X}")
-            return None
+                return None
 
-        if not self._moc_ok(resp):
-            result = self._moc_result(resp)
-            print(f"  Finger {finger_id}: error 0x{result:02X}")
-            return None
-
-        return resp
+            return resp
 
     def get_all_finger_info(self) -> list[bytes]:
         """Get info for all 10 finger slots."""
