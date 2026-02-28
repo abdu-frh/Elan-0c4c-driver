@@ -287,7 +287,14 @@ class ElanDevice:
         Returns: 0x01 = booting, 0x03 = ready.
         """
         resp = self._moc_cmd(0x00, rx_len=2, name="Sensor Status")
-        return self._moc_result(resp)
+        status = self._moc_result(resp)
+        status_names = {
+            InitStatus.READY: "ready",
+            InitStatus.INITIALIZING: "booting",
+        }
+        name = status_names.get(status, f"unknown (0x{status:02X})")
+        print(f"  Sensor status: {name}")
+        return status
 
     def wait_sensor_ready(self, max_retries: int = 100) -> bool:
         for i in range(max_retries):
@@ -666,6 +673,11 @@ if __name__ == "__main__":
         # Full init
         sensor.initialize()
 
+        # sensor.dump_all_registers()
+        # sensor.check_duplicate()
+        sensor.get_sensor_status()
+        # sensor.get_sid()
+
         # Query enrolled fingers
         # sensor.get_finger_count()
         # sensor.get_finger_count()
@@ -683,3 +695,5 @@ if __name__ == "__main__":
         #         raw, sensor.info.width, sensor.info.height
         #     )
         #     print(f"Got {len(pixels)} pixels")
+        #
+        sensor.close()
