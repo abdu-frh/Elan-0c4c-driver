@@ -318,14 +318,14 @@ class ElanDevice:
         2. Poll sensor ready
         3. Get sensor dimensions
         """
+
+        print("=== Device Initialization ===")
         self.get_fw_version()
+        self.get_boot_version()
+        self.get_fw_checksum()
 
         if not self.wait_sensor_ready():
             raise RuntimeError("Sensor failed to initialize")
-
-        print("=== Device Initialization ===")
-        self.get_boot_version()
-        self.get_fw_checksum()
 
         self.get_sensor_dimensions()
         print(f"  {self.info}")
@@ -667,7 +667,8 @@ if __name__ == "__main__":
         sensor.initialize()
 
         # Query enrolled fingers
-        sensor.get_finger_count()
+        # sensor.get_finger_count()
+        # sensor.get_finger_count()
 
         # # Verify (uncomment to test — blocks until finger placed)
         # result = sensor.verify_and_identify()
