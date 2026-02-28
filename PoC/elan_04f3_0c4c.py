@@ -1,5 +1,8 @@
+import argparse
 import platform
+import shlex
 import struct
+import sys
 import time
 from dataclasses import dataclass
 from enum import IntEnum
@@ -701,27 +704,289 @@ class ElanDevice:
 
 # ── Main ───────────────────────────────────────────────────────
 
-if __name__ == "__main__":
+
+def build_parser() -> argparse.ArgumentParser:
+    commands_list = """
+Commands:
+  info
+  fw_ver
+  boot_ver
+  checksum
+  status
+  spi_status
+  enrolled_count
+  finger_info <id>
+  finger_info_all
+  enroll [--user TEXT]
+  verify
+  identify
+  verify_loop
+  delete <id>
+  delete_all
+  wipe_all
+  capture <png>
+  read_reg <reg>
+  dump_regs
+  raw [--ep-in EP] [--rx-len N] <hex...>
+  soft_reset
+  hard_reset
+  bootloader
+  set_mode <mode>
+
+Examples:
+  python elan_04f3_0c4c.py info
+  python elan_04f3_0c4c.py enroll --user myuser
+  python elan_04f3_0c4c.py capture fingerprint.png
+  python elan_04f3_0c4c.py raw 40 19
+""".strip("\n")
+
+    parser = argparse.ArgumentParser(
+        prog="elan-fingerprint",
+        description="ELAN fingerprint sensor tool",
+        epilog=commands_list,
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+
+    # IMPORTANT: do NOT require a subcommand; we’ll start an interactive prompt
+    # if none is provided.
+    sub = parser.add_subparsers(
+        dest="command",
+        metavar="command",
+        title="commands",
+        required=False,
+    )
+
+    # Info / status
+    sub.add_parser("info", help="Show device and firmware info")
+    sub.add_parser("fw_ver", help="Print firmware version")
+    sub.add_parser("boot_ver", help="Print bootloader version")
+    sub.add_parser("checksum", help="Print firmware checksum")
+    sub.add_parser("status", help="Print sensor status")
+    sub.add_parser("spi_status", help="Print sensor SPI status")
+
+    # Fingers
+    sub.add_parser("enrolled_count", help="Print enrolled finger count")
+    p = sub.add_parser("finger_info", help="Show finger info for a slot")
+    p.add_argument("id", type=int, help="Finger slot ID (0-9)")
+    sub.add_parser("finger_info_all", help="Show info for all 10 slots")
+
+    # Enroll / verify
+    p = sub.add_parser("enroll", help="Enroll a new finger")
+    p.add_argument("--user", default="", help="User data string to embed in SID")
+    sub.add_parser("verify", help="Verify a finger (single attempt)")
+    sub.add_parser("identify", help="Verify and retrieve SID")
+    sub.add_parser("verify_loop", help="Keep verifying until recognized")
+
+    # Delete
+    p = sub.add_parser("delete", help="Delete a finger by slot index")
+    p.add_argument("id", type=int, help="Finger slot ID (0-9)")
+    sub.add_parser("delete_all", help="Delete all fingers (by SID)")
+    sub.add_parser("wipe_all", help="Bulk-wipe all enrolled fingerprints")
+
+    # Capture
+    p = sub.add_parser("capture", help="Capture fingerprint image to PNG")
+    p.add_argument("png", help="Output PNG file path")
+
+    # Registers
+    p = sub.add_parser("read_reg", help="Read a single register")
+    p.add_argument("reg", type=int, help="Register number (0-63)")
+    sub.add_parser("dump_regs", help="Dump registers as 8x8 table")
+
+    # Low-level
+    p = sub.add_parser("raw", help="Send raw hex bytes and read response")
+    p.add_argument("hex", nargs="+", help="Hex bytes (e.g. 40 19)")
+    p.add_argument(
+        "--ep-in",
+        type=lambda x: int(x, 0),
+        default=EP_CMD_IN,
+        help=f"IN endpoint (default 0x{EP_CMD_IN:02X})",
+    )
+    p.add_argument("--rx-len", type=int, default=64, help="Response length")
+
+    # Misc
+    sub.add_parser("soft_reset", help="USB soft reset")
+    sub.add_parser("hard_reset", help="Watchdog reset")
+    sub.add_parser("bootloader", help="Switch to bootloader mode")
+    p = sub.add_parser("set_mode", help="Set sensor mode")
+    p.add_argument("mode", type=int, help="Mode (0=normal, 1=VBS)")
+
+    return parser
+
+
+def interactive_loop(parser: argparse.ArgumentParser):
+    print("Interactive mode. Type 'help' to see commands, 'quit' to exit.")
+    while True:
+        try:
+            line = input("elan> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print()
+            return
+
+        if not line:
+            continue
+        if line in {"q", "quit", "exit"}:
+            return
+        if line in {"h", "help", "?"}:
+            parser.print_help()
+            continue
+
+        argv = shlex.split(line)
+        try:
+            args = parser.parse_args(argv)
+        except SystemExit:
+            # argparse throws SystemExit on parse errors; keep the REPL alive.
+            continue
+
+        if args.command is None:
+            parser.print_help()
+            continue
+
+        run_command(args)
+
+
+def run_command(args):
     with ElanDevice() as sensor:
         try:
-            sensor.initialize()
+            if args.command == "info":
+                sensor.initialize()
+                print()
+                print(f"  VID:PID:  {VENDOR_ID:04X}:{PRODUCT_ID:04X}")
+                print(f"  Firmware: {sensor.info.fw_major}.{sensor.info.fw_minor}")
+                print(f"  Boot:     {sensor.info.boot_major}.{sensor.info.boot_minor}")
+                print(f"  Checksum: 0x{sensor.info.checksum:04X}")
+                print(f"  Sensor:   {sensor.info.width}x{sensor.info.height}")
+                count = sensor.get_finger_count()
+                print(f"  Enrolled: {count}")
 
-            # Example: verify
-            # result, desc = sensor.verify_finger()
+            elif args.command == "fw_ver":
+                major, minor = sensor.get_fw_version()
+                print(f"Firmware version: {major}.{minor}")
 
-            # Example: enroll
-            # sensor.enroll_finger(user_data=b"myuser")
+            elif args.command == "boot_ver":
+                major, minor = sensor.get_boot_version()
+                print(f"Bootloader version: {major}.{minor}")
 
-            # Example: capture
-            # sensor.capture_to_png("fingerprint.png")
+            elif args.command == "checksum":
+                cs = sensor.get_fw_checksum()
+                print(f"Firmware checksum: 0x{cs:04X}")
 
-            # Example: finger count
-            sensor.get_finger_count()
+            elif args.command == "status":
+                sensor.get_sensor_status()
 
-            # Example: dump registers
-            # sensor.dump_all_registers()
+            elif args.command == "spi_status":
+                sensor.read_sensor_status()
+
+            elif args.command == "enrolled_count":
+                sensor.initialize()
+                sensor.get_finger_count()
+
+            elif args.command == "finger_info":
+                sensor.initialize()
+                resp = sensor.get_finger_info(args.id)
+                print(f"Finger info {args.id}:")
+                _hexdump(resp)
+
+            elif args.command == "finger_info_all":
+                sensor.initialize()
+                for fid in range(10):
+                    resp = sensor.get_finger_info(fid)
+                    print(f"Finger info {fid}:")
+                    _hexdump(resp)
+
+            elif args.command == "enroll":
+                sensor.initialize()
+                sensor.enroll_finger(user_data=args.user.encode())
+
+            elif args.command == "verify":
+                sensor.initialize()
+                result, desc = sensor.verify_finger()
+                print(f"Result: 0x{result:02X} ({desc})")
+
+            elif args.command == "identify":
+                sensor.initialize()
+                match = sensor.verify_and_identify()
+                if match:
+                    idx, sid = match
+                    print(f"Matched finger {idx}, SID:")
+                    _hexdump(sid)
+                else:
+                    print("No match.")
+
+            elif args.command == "verify_loop":
+                sensor.initialize()
+                result = sensor.verify_loop()
+                print(f"Recognized finger: {result}")
+
+            elif args.command == "delete":
+                sensor.initialize()
+                sensor.remove_finger_by_index(args.id)
+
+            elif args.command == "delete_all":
+                sensor.initialize()
+                sensor.remove_all_fingers()
+
+            elif args.command == "wipe_all":
+                sensor.initialize()
+                sensor.wipe_all_fingers()
+
+            elif args.command == "capture":
+                sensor.initialize()
+                sensor.capture_to_png(args.png)
+
+            elif args.command == "read_reg":
+                val = sensor.read_register(args.reg)
+                print(f"Register {args.reg}: 0x{val:02X}")
+
+            elif args.command == "dump_regs":
+                sensor.dump_all_registers()
+
+            elif args.command == "raw":
+                payload = bytes(int(h, 16) for h in args.hex)
+                print(f"Sending [{len(payload)}B]:")
+                _hexdump(payload)
+                resp = sensor.raw_command(payload, ep_in=args.ep_in, rx_len=args.rx_len)
+                print(f"Received [{len(resp)}B]:")
+                _hexdump(resp)
+
+            elif args.command == "soft_reset":
+                sensor.dev.reset()
+                print("USB device reset.")
+
+            elif args.command == "hard_reset":
+                sensor.send_watchdog_reset()
+
+            elif args.command == "bootloader":
+                sensor.switch_to_bootloader()
+
+            elif args.command == "set_mode":
+                sensor.initialize()
+                sensor.set_sensor_mode(args.mode)
+
+            else:
+                raise ValueError(f"Unknown command: {args.command}")
 
         except (Exception, KeyboardInterrupt):
             print("\nAborting...")
             sensor.abort()
             raise
+
+
+def main(argv=None):
+    parser = build_parser()
+    argv = sys.argv[1:] if argv is None else argv
+
+    if not argv:
+        # No args => interactive prompt instead of argparse error
+        interactive_loop(parser)
+        return
+
+    args = parser.parse_args(argv)
+    if args.command is None:
+        parser.print_help()
+        return
+
+    run_command(args)
+
+
+if __name__ == "__main__":
+    main()
