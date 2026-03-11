@@ -705,6 +705,7 @@ elanmoc_match_report_cb (FpiDeviceElanmoc *self,
         fpi_device_verify_report (device, FPI_MATCH_FAIL, print, NULL);
       fpi_device_verify_complete (device, NULL);
     }
+    fpi_ssm_next_state (self->task_ssm);
 }
 
 static void
@@ -804,15 +805,16 @@ elanmoc_identify_cb (FpiDeviceElanmoc *self,
       return;
     }
 
-  if (buffer_in[1] == ELAN_MSG_VERIFY_ERR)
-    identify_status_report (self, RSP_VERIFY_FAIL,
-                            buffer_in[1], error);
-  else if (buffer_in[1] <= ELAN_MAX_ENROLL_NUM)
+  if (buffer_in[1] == ELAN_MSG_VERIFY_ERR){
+      identify_status_report (self, RSP_VERIFY_FAIL,
+                              buffer_in[1], error);
+      fpi_ssm_next_state (self->task_ssm);
+  } else if (buffer_in[1] <= ELAN_MAX_ENROLL_NUM){
     identify_status_report (self, RSP_VERIFY_OK, buffer_in[1], error);
-  else
-    identify_status_report (self, RSP_VERIFY_FAIL, buffer_in[1], error);
-  fpi_ssm_next_state (self->task_ssm);
-
+  }else{
+      identify_status_report (self, RSP_VERIFY_FAIL, buffer_in[1], error);
+    fpi_ssm_next_state (self->task_ssm);
+  }
 }
 
 static void
