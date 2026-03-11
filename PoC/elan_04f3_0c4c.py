@@ -20,6 +20,7 @@ PRODUCT_ID = 0x0C4C
 #   Blocking (verify/enroll): OUT 0x01, IN 0x84
 #   Image data:              OUT 0x01, IN 0x82
 EP_OUT = 0x01
+EP_CMD_IN_SPECIAL = 0x83
 EP_CMD_IN = 0x83  # bridge + non-blocking MOC
 EP_BLOCK_IN = 0x84  # blocking MOC (verify, enroll)
 EP_IMG_IN = 0x82  # image bulk read
@@ -606,7 +607,9 @@ class ElanDevice:
     def set_sensor_mode(self, mode: int) -> bool:
         """MOC 0x14 [mode] → set FW sensor mode (0=normal, 1=VBS)."""
         payload = bytes([mode & 0xFF])
-        resp = self._moc_cmd(0x14, payload=payload, rx_len=4, name="Set Mode")
+        resp = self._moc_cmd(
+            0x14, ep_in=EP_CMD_IN_SPECIAL, payload=payload, rx_len=4, name="Set Mode"
+        )
         result = self._moc_result(resp)
         print(f"  Set mode {mode}: 0x{result:02X}")
         return result == MocResponse.SUCCESS
