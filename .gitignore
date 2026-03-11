@@ -1,2 +1,4 @@
 /target
 /PoC/capture_wireshark/*
+/libfprint/builddir
+/libfprint/build
