@@ -662,8 +662,8 @@ elanmoc_match_report_cb (FpiDeviceElanmoc *self,
       return;
     }
 
-  userid_len = buffer_in[4];
-  if (userid_len == 0 || (gsize)(userid_len + 5) > length_in)
+  userid_len = buffer_in[3];
+  if (userid_len == 0 || (gsize)(userid_len + 4) > length_in)
     {
       fpi_ssm_mark_failed (self->task_ssm,
                            fpi_device_error_new_msg (FP_DEVICE_ERROR_PROTO,
@@ -671,9 +671,9 @@ elanmoc_match_report_cb (FpiDeviceElanmoc *self,
       return;
     }
 
-  userid_safe = g_strndup ((const char *) &buffer_in[5], userid_len);
-  uid = g_variant_new_fixed_array (G_VARIANT_TYPE_BYTE, &buffer_in[5], userid_len, 1);
-  data = g_variant_new ("(yy@ay)", buffer_in[2], buffer_in[3], uid);
+  userid_safe = g_strndup ((const char *) &buffer_in[4], userid_len);
+  uid = g_variant_new_fixed_array (G_VARIANT_TYPE_BYTE, &buffer_in[4], userid_len, 1);
+  data = g_variant_new ("(yy@ay)", buffer_in[1], buffer_in[2], uid);
 
   print = fp_print_new (device);
   fpi_print_set_type (print, FPI_PRINT_RAW);
