@@ -519,10 +519,13 @@ elanmoc_get_finger_info_cb (FpiDeviceElanmoc *self,
                              GError           *error)
 {
 
-fp_info ("elanmoc finger_info slot %d response (%zu B): 0x%.2X 0x%.2X",
-         self->list_index, length_in,
-         length_in > 0 ? buffer_in[0] : 0xFF,
-        length_in > 1 ? buffer_in[1] : 0xFF);
+    fp_info ("elanmoc finger_info slot %d response (%zu B): 0x%.2X 0x%.2X 0x%.2X 0x%.2X 0x%.2X",
+             self->list_index, length_in,
+             length_in > 0 ? buffer_in[0] : 0xFF,
+             length_in > 1 ? buffer_in[1] : 0xFF,
+             length_in > 2 ? buffer_in[2] : 0xFF,
+             length_in > 3 ? buffer_in[3] : 0xFF,
+             length_in > 4 ? buffer_in[4] : 0xFF);
 
   FpPrint *print;
   GVariant *data;
@@ -543,14 +546,14 @@ fp_info ("elanmoc finger_info slot %d response (%zu B): 0x%.2X 0x%.2X",
     goto next;
 
   /* Layout: [0x40][0x00][0x00][0x00][user_id_len][...user_id...] */
-  userid_len = buffer_in[4];
-  if (userid_len == 0 || (gsize)(userid_len + 5) > length_in)
+  userid_len = buffer_in[3];
+  if (userid_len == 0 || (gsize)(userid_len + 4) > length_in)
     goto next;
 
-  userid_safe = g_strndup ((const char *) &buffer_in[5], userid_len);
+  userid_safe = g_strndup ((const char *) &buffer_in[4], userid_len);
   uid = g_variant_new_fixed_array (G_VARIANT_TYPE_BYTE,
-                                   &buffer_in[5], userid_len, 1);
-  data = g_variant_new ("(yy@ay)", buffer_in[2], buffer_in[3], uid);
+                                   &buffer_in[4], userid_len, 1);
+  data = g_variant_new ("(yy@ay)", buffer_in[1], buffer_in[2], uid);
 
   print = fp_print_new (FP_DEVICE (self));
   fpi_print_set_type (print, FPI_PRINT_RAW);
