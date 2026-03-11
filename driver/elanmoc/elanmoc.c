@@ -506,9 +506,6 @@ elanmoc_list_verify_cb (FpiDeviceElanmoc *self,
       fpi_ssm_mark_failed (self->task_ssm, error);
       return;
     }
-
-  fp_info ("elanmoc list: verify unlock result 0x%.2X", buffer_in[1]);
-  /* Any response (match or no-match) unlocks finger_info — proceed */
   fpi_ssm_next_state (self->task_ssm);
 }
 
@@ -518,14 +515,6 @@ elanmoc_get_finger_info_cb (FpiDeviceElanmoc *self,
                              gsize             length_in,
                              GError           *error)
 {
-
-    fp_info ("elanmoc finger_info slot %d response (%zu B): 0x%.2X 0x%.2X 0x%.2X 0x%.2X 0x%.2X",
-             self->list_index, length_in,
-             length_in > 0 ? buffer_in[0] : 0xFF,
-             length_in > 1 ? buffer_in[1] : 0xFF,
-             length_in > 2 ? buffer_in[2] : 0xFF,
-             length_in > 3 ? buffer_in[3] : 0xFF,
-             length_in > 4 ? buffer_in[4] : 0xFF);
 
   FpPrint *print;
   GVariant *data;
