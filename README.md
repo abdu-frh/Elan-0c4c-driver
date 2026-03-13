@@ -110,7 +110,7 @@ Should also appear in the gnome settings under user
 
 | USB ID | Device |
 |--------|--------|
-| `04f3:0c4c` | ELAN Match-on-Chip Fingerprint Reader (HP Spectre x360 14" 2020) |
+| `04f3:0c4c` | ELAN Match-on-Chip Fingerprint Reader (HP Envy x360 15") |
 
 If your device uses the same USB ID and is not listed, it may still work. Feel free to open an issue with your laptop model.
 
