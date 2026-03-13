@@ -38,6 +38,7 @@ drivers_tests = [
     'elan',
     'elan-cobo',
     'elanmoc',
+    'elanmoc_0c4c',
     'elanspi',
     'synaptics',
     'upektc_img',

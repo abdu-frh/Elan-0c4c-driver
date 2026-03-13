@@ -19,7 +19,7 @@ devices = c.get_devices()
 d = devices[0]
 del devices
 
-assert d.get_driver() == "elanmoc"
+assert d.get_driver() == "elanmoc_0c4c"
 assert not d.has_feature(FPrint.DeviceFeature.CAPTURE)
 assert d.has_feature(FPrint.DeviceFeature.IDENTIFY)
 assert d.has_feature(FPrint.DeviceFeature.VERIFY)

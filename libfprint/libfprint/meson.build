@@ -129,12 +129,12 @@ driver_sources = {
         [ 'drivers/egismoc/egismoc.c' ],
     'vfs0050' :
         [ 'drivers/vfs0050.c' ],
-    'elanmoc_0c4c':
-        ['drivers/elanmoc_0c4c/elanmoc_0c4c.c'],
     'elan' :
         [ 'drivers/elan.c' ],
     'elanmoc' :
         [ 'drivers/elanmoc/elanmoc.c' ],
+    'elanmoc_0c4c':
+        ['drivers/elanmoc_0c4c/elanmoc_0c4c.c'],
     'elanspi' :
         [ 'drivers/elanspi.c' ],
     'nb1010' :
