@@ -27,7 +27,7 @@
 #include <stdlib.h>
 
 G_DECLARE_FINAL_TYPE (FpiDeviceElanmoc0c4c, fpi_device_elanmoc_0c4c, FPI,
-                       DEVICE_ELANMOC_0C4C, FpDevice)
+                      DEVICE_ELANMOC_0C4C, FpDevice)
 
 #define ELAN_MOC_DRIVER_FULLNAME "Elan MOC Sensors"
 #define ELAN_MOC_CMD_LEN 0x3
@@ -158,7 +158,7 @@ static const struct elanmoc_cmd elanmoc_finger_info_cmd = {
 
 
 typedef void (*ElanCmdMsgCallback) (FpiDeviceElanmoc0c4c *self,
-                                    GError           *error);
+                                    GError               *error);
 
 
 enum moc_enroll_states {
